@@ -1,219 +1,1034 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Tide 的个人主页：厦门大学学生，Go 后端开发者。项目与开源贡献：orangecode、gorangetask、gorangefeed、uber/kraken、go-task、go-redis。">
-<title>Tide · 厦门大学 · Go 后端</title>
+<title>Tide · Go Backend · Xiamen University</title>
+<meta id="metaDesc" name="description" content="Tide's homepage — a Xiamen University student building Go backends and contributing to open source: projects, bug-fix case studies, and what I'm doing now.">
+<script>try{var l=localStorage.getItem('tide-lang');if(l==='cn'){document.documentElement.lang='zh-CN';}}catch(e){}</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/inter@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/source-serif-4@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/noto-serif-sc@latest/index.css">
 <style>
-  :root {
-    --bg: #0f172a;
-    --bg-soft: #111c33;
-    --card: #1f2937;
-    --card-hover: #273449;
-    --border: #334155;
-    --text: #e5e7eb;
-    --text-dim: #9ca3af;
-    --accent: #60a5fa;
-    --accent-hover: #93c5fd;
+  :root{
+    color-scheme:light;
+    --bg:#FDF7EE;
+    --bg-soft:#FAF1E1;
+    --card:#FFFFFF;
+    --border:#EBDCC4;
+    --text:#292524;
+    --muted:#57534E;
+    --faint:#78716C;
+    --orange:#EA580C;
+    --orange-hi:#C2410C;
+    --orange-bright:#F97316;
+    --orange-dim:rgba(234,88,12,.10);
+    --shadow:0 1px 3px rgba(146,84,22,.06),0 10px 28px rgba(146,84,22,.06);
+    --cell-0:#F0E7D6;
+    --cell-1:#FDBA74;
+    --cell-2:#FB923C;
+    --cell-3:#EA580C;
+    --cell-4:#9A3412;
+    --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    --font-display:"Space Grotesk","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    --font-mono:ui-monospace,"SF Mono","Cascadia Code",Consolas,Menlo,monospace;
+    --font-serif:"Source Serif 4","Noto Serif SC","Songti SC","STSong","SimSun",Georgia,"Times New Roman",serif;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-      "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.8;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
   }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { color: var(--accent-hover); text-decoration: underline; }
+  ::selection{background:var(--orange);color:#FFF7ED}
+  a{color:var(--orange);text-decoration:none}
+  a:hover{color:var(--orange-hi);text-decoration:underline}
 
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-
-  header {
-    text-align: center;
-    padding: 72px 24px 48px;
-    background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
-    border-bottom: 1px solid var(--border);
+  /* ---------- 双栏布局 ---------- */
+  .layout{
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    gap:56px;
+    padding:0 32px;
   }
-  header h1 { font-size: 3rem; font-weight: 700; letter-spacing: 0.02em; }
-  header .subtitle { margin-top: 10px; font-size: 1.15rem; color: var(--text); }
-  header .subtitle .en { display: block; font-size: 0.95rem; color: var(--text-dim); font-style: italic; }
-  .badges { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-  .badges img { height: 22px; vertical-align: middle; }
-  .badges a:hover { text-decoration: none; opacity: 0.85; }
 
-  section { padding: 44px 0 8px; }
-  section h2 {
-    font-size: 1.45rem; font-weight: 600;
-    padding-bottom: 10px; margin-bottom: 22px;
-    border-bottom: 2px solid var(--border);
+  /* ---------- 左侧固定栏 ---------- */
+  .sidebar{
+    width:320px;
+    flex:0 0 320px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:64px 36px 40px 0;
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
   }
-  section h2 .en { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
-  .en-sub { color: var(--text-dim); font-style: italic; font-size: 0.95rem; }
-
-  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .tags img { height: 24px; }
-
-  .cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
-  @media (min-width: 640px) { .cards { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 900px) { .cards { grid-template-columns: repeat(3, 1fr); } }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
+  .sidebar .avatar{
+    width:104px;height:104px;border-radius:50%;
+    border:2px solid var(--orange);
+    display:block;
   }
-  .card:hover { background: var(--card-hover); }
-  .card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-  .card h3 a { color: var(--text); }
-  .card h3 a:hover { color: var(--accent-hover); text-decoration: none; }
-  .card p { color: var(--text-dim); font-size: 0.93rem; }
-  .card .stack { margin-top: 12px; font-size: 0.82rem; color: var(--accent); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .sidebar h1{
+    font-family:var(--font-display);
+    font-size:52px;
+    line-height:1.15;
+    font-weight:700;
+    letter-spacing:.01em;
+    margin-top:26px;
+  }
+  .sidebar .role{
+    color:var(--orange);
+    font-size:17px;
+    font-weight:600;
+    margin-top:8px;
+  }
+  .sidebar .creed{
+    color:var(--muted);
+    font-size:16px;
+    margin-top:14px;
+  }
+  /* 语言切换 */
+  .lang-switch{display:flex;gap:6px;margin-top:24px}
+  .lang-switch button{
+    font-family:var(--font-body);
+    font-size:13px;
+    color:var(--muted);
+    background:transparent;
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:3px 14px;
+    cursor:pointer;
+    transition:color .2s,background .2s,border-color .2s;
+  }
+  .lang-switch button:hover{color:var(--orange);border-color:var(--orange)}
+  .lang-switch button.active{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#FFF7ED;
+    font-weight:700;
+  }
+  .sidebar nav{margin-top:36px}
+  .sidebar nav a{
+    display:flex;align-items:center;gap:12px;
+    color:var(--muted);
+    font-size:14px;
+    letter-spacing:.22em;
+    padding:7px 0;
+    text-decoration:none;
+    transition:color .2s;
+  }
+  .sidebar nav a::before{
+    content:"";
+    width:26px;height:1px;
+    background:var(--faint);
+    transition:width .25s,background .25s;
+  }
+  .sidebar nav a:hover{color:var(--text);text-decoration:none}
+  .sidebar nav a.active{color:var(--orange)}
+  .sidebar nav a.active::before{width:52px;background:var(--orange)}
+  .sidebar .side-foot{
+    margin-top:auto;
+    padding-top:32px;
+    font-size:14.5px;
+    color:var(--muted);
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .sidebar .side-foot a{color:var(--muted)}
+  .sidebar .side-foot a:hover{color:var(--orange);text-decoration:none}
 
-  .contrib { padding: 16px 0; border-bottom: 1px solid var(--border); }
-  .contrib:last-child { border-bottom: none; }
-  .contrib .proj { font-size: 1.08rem; font-weight: 600; }
-  .contrib .loc { color: var(--text-dim); font-size: 0.95rem; }
-  .contrib p { margin-top: 4px; }
+  /* ---------- 右侧内容 ---------- */
+  main{
+    flex:1;
+    min-width:0;
+    padding:64px 0 30px;
+  }
+  section{margin-bottom:84px;scroll-margin-top:28px}
+  .sec-label{
+    font-size:13px;
+    letter-spacing:.3em;
+    color:var(--orange);
+    font-weight:700;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .sec-label::after{content:"";flex:1;height:1px;background:var(--border)}
 
-  ul.simple { list-style: none; }
-  ul.simple li { padding: 10px 0; border-bottom: 1px solid var(--border); }
-  ul.simple li:last-child { border-bottom: none; }
-  ul.simple .name { font-weight: 600; }
-  ul.simple .desc { color: var(--text-dim); font-size: 0.94rem; }
-  ul.simple .stack { color: var(--accent); font-size: 0.84rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  /* 开场白 */
+  .intro p{
+    font-family:var(--font-serif);
+    font-size:1.12rem;
+    line-height:1.9;
+    color:var(--text);
+    max-width:44em;
+  }
+  .intro p + p{margin-top:14px}
+  .intro .dim{color:var(--muted);font-size:16.5px}
 
-  .contact p { margin: 6px 0; }
+  /* Now */
+  .now-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    border-radius:10px;
+    padding:22px 26px;
+    box-shadow:var(--shadow);
+  }
+  .now-card .now-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:12px;
+  }
+  .now-card .now-title{font-family:var(--font-display);font-weight:700;font-size:16.5px}
+  .now-card .now-title .dot{color:var(--orange)}
+  .now-card .now-updated{color:var(--faint);font-size:13px;font-family:var(--font-mono)}
+  .now-card ul{list-style:none}
+  .now-card li{
+    padding:7px 0 7px 20px;
+    position:relative;
+    color:var(--muted);
+    font-size:15.5px;
+  }
+  .now-card li::before{
+    content:"";
+    position:absolute;left:2px;top:17px;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--orange);
+  }
+  .now-card li b{color:var(--text);font-weight:600}
 
-  footer {
-    text-align: center;
-    color: var(--text-dim);
-    font-size: 0.88rem;
-    padding: 40px 24px 48px;
-    margin-top: 40px;
-    border-top: 1px solid var(--border);
+  /* 项目大条目 */
+  .project{margin-bottom:64px}
+  .project:last-child{margin-bottom:0}
+  .project .visual{
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--bg-soft);
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .browser-frame .frame-bar{
+    display:flex;align-items:center;gap:7px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--border);
+    background:#F6EBD8;
+  }
+  .browser-frame .frame-bar i{
+    width:11px;height:11px;border-radius:50%;
+    background:#DCC9A8;display:block;
+  }
+  .browser-frame .frame-bar i:first-child{background:var(--orange)}
+  .browser-frame .frame-url{
+    margin-left:10px;
+    font-size:12px;color:var(--faint);
+    font-family:var(--font-mono);
+  }
+  .browser-frame img{display:block;width:100%;height:auto}
+  .project h3{font-family:var(--font-display);font-size:26px;font-weight:700;line-height:1.35}
+  .project h3 a{color:var(--text);text-decoration:none}
+  .project h3 a:hover{color:var(--orange);text-decoration:none}
+  .project .hook{
+    color:var(--orange);
+    font-size:16.5px;
+    font-weight:600;
+    margin-top:4px;
+  }
+  .project .desc{
+    color:var(--muted);
+    font-size:15.5px;
+    margin-top:10px;
+    max-width:46em;
+  }
+  .project .desc b{color:var(--text);font-weight:600}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .tags span{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--orange);
+    background:var(--orange-dim);
+    border-radius:999px;
+    padding:3px 12px;
+    letter-spacing:.03em;
+  }
+  .project .repo-link{
+    display:inline-block;margin-top:14px;font-size:14.5px;
+  }
+
+  /* 流水线 / 生命周期图 */
+  .diagram{padding:26px 22px;overflow-x:auto}
+  .flow{
+    display:flex;align-items:stretch;gap:0;
+    min-width:560px;
+  }
+  .flow-node{
+    flex:1;
+    border:1px solid var(--border);
+    border-top:2px solid var(--orange);
+    border-radius:8px;
+    background:var(--card);
+    padding:12px 10px 10px;
+    text-align:center;
+  }
+  .flow-node .fn-name{font-weight:700;font-size:15px}
+  .flow-node .fn-sub{color:var(--faint);font-size:12px;margin-top:2px;line-height:1.5}
+  .flow-arrow{
+    align-self:center;
+    color:var(--orange);
+    font-size:17px;
+    padding:0 7px;
+    flex:0 0 auto;
+  }
+  .diagram-note{
+    color:var(--faint);font-size:13px;
+    padding:0 22px 18px;
+    margin-top:-6px;
+  }
+
+  /* 案例 */
+  .case{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:26px 28px;
+    margin-bottom:22px;
+    box-shadow:var(--shadow);
+  }
+  .case:last-child{margin-bottom:0}
+  .case .case-proj{
+    font-family:var(--font-mono);
+    color:var(--orange);
+    font-size:13px;font-weight:700;
+    letter-spacing:.14em;
+  }
+  .case h3{font-family:var(--font-display);font-size:19.5px;font-weight:700;line-height:1.5;margin-top:5px}
+  .case .case-body{margin-top:12px}
+  .case .case-body p{
+    color:var(--muted);font-size:15px;
+    margin-bottom:9px;
+  }
+  .case .case-body p:last-child{margin-bottom:0}
+  .case .k{
+    color:var(--text);font-weight:700;
+    margin-right:6px;
+  }
+  .case .case-foot{
+    margin-top:16px;padding-top:13px;
+    border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    font-size:13.5px;color:var(--faint);
+  }
+  .case .case-foot .merged{color:var(--orange);font-weight:600}
+
+  /* 动态：活动图 */
+  .activity-wrap{margin-bottom:34px}
+  .grid-scroll{overflow-x:auto;padding-bottom:6px}
+  .contrib-grid{
+    display:grid;
+    grid-template-rows:repeat(7,11px);
+    grid-auto-flow:column;
+    grid-auto-columns:11px;
+    gap:3px;
+    width:max-content;
+  }
+  .contrib-grid i{
+    display:block;width:11px;height:11px;
+    border-radius:2.5px;
+    background:var(--cell-0);
+  }
+  .contrib-grid i.l1{background:var(--cell-1)}
+  .contrib-grid i.l2{background:var(--cell-2)}
+  .contrib-grid i.l3{background:var(--cell-3)}
+  .contrib-grid i.l4{background:var(--cell-4)}
+  .activity-stats{
+    display:flex;gap:38px;flex-wrap:wrap;
+    margin-top:16px;
+  }
+  .activity-stats .stat b{
+    font-family:var(--font-display);
+    display:block;
+    font-size:24px;font-weight:700;
+    color:var(--orange);
+    line-height:1.3;
+  }
+  .activity-stats .stat span{color:var(--faint);font-size:13px}
+  .legend{
+    display:flex;align-items:center;gap:4px;
+    color:var(--faint);font-size:12px;margin-top:10px;
+  }
+  .legend i{width:11px;height:11px;border-radius:2.5px;background:var(--cell-0);display:block}
+  .legend i.l1{background:var(--cell-1)}
+  .legend i.l2{background:var(--cell-2)}
+  .legend i.l3{background:var(--cell-3)}
+  .legend i.l4{background:var(--cell-4)}
+
+  /* News 流 */
+  .news{list-style:none}
+  .news li{
+    display:flex;gap:18px;align-items:baseline;
+    padding:9px 0;
+    border-bottom:1px dashed var(--border);
+    font-size:15.5px;
+  }
+  .news li:last-child{border-bottom:none}
+  .news .date{
+    flex:0 0 96px;
+    color:var(--faint);
+    font-size:13.5px;
+    font-family:var(--font-mono);
+    position:relative;
+    padding-left:16px;
+  }
+  .news .date::before{
+    content:"";
+    position:absolute;left:0;top:9px;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--orange);
+  }
+  .news .txt{color:var(--muted)}
+  .news .txt b{color:var(--text);font-weight:600}
+
+  .events{margin-top:26px}
+  .events .ev-title{
+    font-family:var(--font-mono);
+    color:var(--faint);font-size:13px;letter-spacing:.2em;margin-bottom:8px;
+  }
+  .events ul{list-style:none}
+  .events li{
+    font-size:13.5px;color:var(--faint);
+    padding:3px 0;
+  }
+  .events li b{color:var(--muted);font-weight:600}
+
+  /* 观点 */
+  .views .view{margin-bottom:38px}
+  .views .view:last-child{margin-bottom:0}
+  .views .view .big{
+    font-family:var(--font-display);
+    font-size:27px;font-weight:700;line-height:1.45;
+  }
+  .views .view .big .no{color:var(--orange);margin-right:12px}
+  .views .view p{color:var(--muted);font-size:15.5px;margin-top:6px;max-width:42em}
+
+  /* 联系 / 页脚 */
+  .contact p{font-size:18px;max-width:40em}
+  .contact .ways{margin-top:16px;font-size:16.5px;display:flex;flex-direction:column;gap:6px}
+  footer{
+    border-top:1px solid var(--border);
+    padding:22px 0 8px;
+    color:var(--faint);
+    font-size:13px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  /* 移动端 */
+  @media (max-width:900px){
+    .layout{flex-direction:column;gap:0;padding:0 22px}
+    .sidebar{
+      position:static;height:auto;width:100%;flex:none;
+      padding:44px 0 6px;
+      border-right:none;
+    }
+    .sidebar h1{font-size:42px}
+    .sidebar nav{display:none}
+    .sidebar .side-foot{margin-top:26px;padding-top:0}
+    main{padding:34px 0 20px}
+    section{margin-bottom:60px}
+    .news .date{flex-basis:86px}
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Tide</h1>
-  <p class="subtitle">厦门大学 · Go 后端
-    <span class="en">Xiamen University · Go backend</span>
-  </p>
-  <div class="badges">
-    <a href="mailto:tidehyc3234@163.com"><img alt="Email" src="https://img.shields.io/badge/tidehyc3234@163.com-1F2937?style=flat-square&logo=maildotru&logoColor=white"></a>
-    <img alt="Xiamen, China" src="https://img.shields.io/badge/Xiamen%2C_China-1F2937?style=flat-square&logo=googlemaps&logoColor=white">
-    <a href="https://github.com/Tidehyc"><img alt="GitHub" src="https://img.shields.io/badge/Tidehyc-1F2937?style=flat-square&logo=github&logoColor=white"></a>
-  </div>
-</header>
+<div class="layout">
 
-<div class="wrap">
-
-  <section id="about">
-    <h2>关于我 · <span class="en">About</span></h2>
-    <p>在读学生，热爱 Go，正在通过项目探索后端开发的各个方向。</p>
-    <p class="en-sub">A student who loves Go, exploring different directions in backend development through projects.</p>
-  </section>
-
-  <section id="stack">
-    <h2>技术栈 · <span class="en">Tech Stack</span></h2>
-    <div class="tags">
-      <img alt="Go" src="https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white">
-      <img alt="C++" src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=cplusplus&logoColor=white">
-      <img alt="Python" src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white">
-      <img alt="Gin" src="https://img.shields.io/badge/Gin-00ADD8?style=flat-square&logo=go&logoColor=white">
-      <img alt="Prometheus" src="https://img.shields.io/badge/Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white">
-      <img alt="MySQL" src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white">
-      <img alt="Redis" src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white">
-      <img alt="RabbitMQ" src="https://img.shields.io/badge/RabbitMQ-FF6600?style=flat-square&logo=rabbitmq&logoColor=white">
-      <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white">
+  <!-- ================= 左侧固定栏 ================= -->
+  <aside class="sidebar">
+    <img class="avatar" id="avatarImg" src="https://github.com/Tidehyc.png" alt="Tide's GitHub avatar" width="104" height="104">
+    <h1>Tide</h1>
+    <div class="role" data-i18n="role">Go Backend · Xiamen University</div>
+    <p class="creed" data-i18n="creed">Reproduce first, then fix.</p>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" id="lang-en">EN</button>
+      <button type="button" id="lang-cn">中</button>
     </div>
-  </section>
+    <nav id="sidenav">
+      <a href="#projects" data-i18n="navProjects">Projects</a>
+      <a href="#cases" data-i18n="navCases">Cases</a>
+      <a href="#activity" data-i18n="navActivity">Activity</a>
+      <a href="#views" data-i18n="navViews">Principles</a>
+      <a href="#contact" data-i18n="navContact">Contact</a>
+    </nav>
+    <div class="side-foot">
+      <a href="mailto:tidehyc3234@163.com">tidehyc3234@163.com</a>
+      <a href="https://github.com/Tidehyc" target="_blank" rel="noopener">github.com/Tidehyc ↗</a>
+    </div>
+  </aside>
 
-  <section id="work">
-    <h2>当前项目 · <span class="en">Current Work</span></h2>
-    <div class="cards">
-      <div class="card">
-        <h3><a href="https://github.com/Tidehyc/orangecode">orangecode</a></h3>
-        <p>面向多任务并发与多轮对话的开源 Agent Harness</p>
-        <p class="stack">Python · TypeScript</p>
+  <!-- ================= 右侧内容 ================= -->
+  <main>
+
+    <!-- 开场白 -->
+    <section class="intro" id="intro">
+      <p data-i18n="intro1">I'm Tide, and I've had PRs merged into redis/go-redis (22k★), go-task/task (16k★), and uber/kraken (6.7k★). I'm a Communication Engineering undergrad at Xiamen University (Class of 2028). I started with C++, then moved to Go for backend and open-source work; I build my own projects to learn. Lately, I've been building up cloud-native and platform engineering, and looking for a Go backend internship.</p>
+    </section>
+
+    <!-- Now -->
+    <section id="now">
+      <div class="now-card">
+        <div class="now-head">
+          <div class="now-title"><span class="dot">●</span> <span data-i18n="nowTitle">Now</span></div>
+          <div class="now-updated" data-i18n="nowUpdated">Last updated: Nov 2026</div>
+        </div>
+        <ul>
+          <li data-i18n="now1"><b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.</li>
+          <li data-i18n="now2"><b>Learning cloud-native and platform engineering</b> — my direction is Go backend + cloud-native.</li>
+          <li data-i18n="now3"><b>Iterating on orangecode</b>, my open-source Agent Harness project.</li>
+        </ul>
       </div>
-      <div class="card">
-        <h3><a href="https://github.com/Tidehyc/gorangetask">gorangetask</a></h3>
-        <p>可嵌入 Go 服务的 MySQL 事务型持久化任务队列</p>
-        <p class="stack">Go · MySQL</p>
+    </section>
+
+    <!-- 项目 -->
+    <section id="projects">
+      <div class="sec-label"><span data-i18n="secProjects">Projects</span></div>
+
+      <article class="project">
+        <div class="visual browser-frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="frame-url" data-i18n="frameUrl">orangecode — tui · live capture</span></div>
+          <img id="tuiImg" src="assets/orangecode-tui.png" alt="orangecode terminal UI, live capture: the main screen, with the ORANGE CODE banner, session history panel, and status bar">
+        </div>
+        <h3><a href="https://github.com/Tidehyc/orangecode" target="_blank" rel="noopener">orangecode</a></h3>
+        <div class="hook" data-i18n="ocHook">An Agent Harness that runs multiple tasks at once — and remembers the context.</div>
+        <p class="desc" data-i18n="ocDesc">An open-source agent harness for <b>concurrent tasks and multi-turn conversations</b>. It organizes task execution with <b>Spine semantics</b>, routes context via <b>KNN semantic routing</b>, and tracks per-call costs with <b>CostLedger</b>. Session exports carry <b>SHA-256 signatures</b> — verifiable and tamper-proof.</p>
+        <div class="tags"><span>Python</span><span>TypeScript</span><span>Agent Harness</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/orangecode" target="_blank" rel="noopener" data-i18n="repoLink">GitHub repo ↗</a>
+      </article>
+
+      <article class="project">
+        <div class="visual">
+          <div class="diagram">
+            <div class="flow">
+              <div class="flow-node"><div class="fn-name" data-i18n="fn1Name">Publish</div><div class="fn-sub" data-i18n="fn1Sub">posting a video</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="fn2Name">Distribution</div><div class="fn-sub" data-i18n="fn2Sub">push–pull hybrid</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="fn3Name">Consumption</div><div class="fn-sub" data-i18n="fn3Sub">paginated feed</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="fn4Name">Interaction</div><div class="fn-sub" data-i18n="fn4Sub">likes &amp; favorites, counted</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="fn5Name">Notifications</div><div class="fn-sub" data-i18n="fn5Sub">async queue</div></div>
+            </div>
+          </div>
+        </div>
+        <h3><a href="https://github.com/Tidehyc/gorangefeed" target="_blank" rel="noopener">gorangefeed</a></h3>
+        <div class="hook" data-i18n="feedHook">What happens between a short video being posted and it showing up in your feed.</div>
+        <p class="desc" data-i18n="feedDesc">A short-video feed backend spanning publishing → distribution → consumption → interaction → notification. Structured around <b>vertical slices</b>, each stage its own module; split at runtime into a monolithic API and standalone workers, with time-consuming work like notifications routed through asynchronous queues so the request path stays unblocked.</p>
+        <div class="tags"><span>Go</span><span>Gin</span><span>MySQL</span><span>Redis</span><span>RabbitMQ</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/gorangefeed" target="_blank" rel="noopener" data-i18n="repoLink">GitHub repo ↗</a>
+      </article>
+
+      <article class="project">
+        <div class="visual">
+          <div class="diagram">
+            <div class="flow">
+              <div class="flow-node"><div class="fn-name" data-i18n="tn1Name">Enqueue</div><div class="fn-sub" data-i18n="tn1Sub">same transaction as the business row</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="tn2Name">Claim</div><div class="fn-sub" data-i18n="tn2Sub">fencing token blocks duplicate execution</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="tn3Name">Execute</div><div class="fn-sub" data-i18n="tn3Sub">local handler</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="tn4Name">Done</div><div class="fn-sub" data-i18n="tn4Sub">confirmed on success</div></div>
+            </div>
+          </div>
+          <div class="diagram-note" data-i18n="taskNote">On failure, retries back off exponentially; past the limit, tasks go to a dead-letter queue. If a worker dies mid-run, another worker picks its tasks up once the lease expires.</div>
+        </div>
+        <h3><a href="https://github.com/Tidehyc/gorangetask" target="_blank" rel="noopener">gorangetask</a></h3>
+        <div class="hook" data-i18n="taskHook">Tasks written to MySQL don't get lost — if a worker dies, another one picks them up.</div>
+        <p class="desc" data-i18n="taskDesc">An embeddable MySQL transactional task queue for Go services: business data and task rows are written in the same transaction, so once it commits, nothing is lost. Claiming runs on leases plus <b>fencing tokens</b>, so late writes from an old worker get rejected; failures retry with exponential backoff and land in a dead-letter queue once exhausted. Released as <b>v0.1.0</b>, with CI and real-database integration tests. Measured on a dev machine (Oct 2026): 10,000 same-transaction enqueues at 100% integrity, and tasks picked up about 2–3.7 seconds after a worker stopped renewing its lease.</p>
+        <div class="tags"><span>Go</span><span>MySQL</span><span data-i18n="tagTaskQueue">Task Queue</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/gorangetask" target="_blank" rel="noopener" data-i18n="repoLink">GitHub repo ↗</a>
+      </article>
+    </section>
+
+    <!-- 案例 -->
+    <section id="cases">
+      <div class="sec-label"><span data-i18n="secCases">Case Studies — Bugs I've Fixed</span></div>
+
+      <article class="case">
+        <div class="case-proj">REDIS / GO-REDIS</div>
+        <h3 data-i18n="c1t">False “pool exhausted” right after connection re-authentication</h3>
+        <div class="case-body">
+          <p data-i18n="c1p"><span class="k">Problem</span>With MaxActiveConns set to 1, a connection that has just finished re-authenticating is already idle — yet the very next command can still fail with “connection pool exhausted”. Running a reproduction script against the unfixed code, it hit about 51 times in 1,000 runs under -race.</p>
+          <p data-i18n="c1q"><span class="k">Root Cause</span>getConn first scans the idle connections with popIdle, but a connection mid-re-authentication is marked InUse and gets skipped. By the time the flow reaches the capacity check, that connection is back to Idle — yet the check only counts connections still flagged Unusable / InUse, so it misjudges the pool as full, goes off to dial, and hits the hard limit.</p>
+          <p data-i18n="c1r"><span class="k">Fix</span>At the capacity limit, before dialing or erroring out, re-check the idle list once: if a connection has become available, retry claiming it. One check only, no new waiting — the PoolTimeout budget and TryGet's non-blocking semantics stay untouched. The regression test was strengthened to 200 rapid credential rotations with concurrent PINGs, and it fails reliably on the unfixed code.</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged" data-i18n="merged1">Merged · Nov 18, 2026</span>
+          <a href="https://github.com/redis/go-redis/pull/4333" target="_blank" rel="noopener" data-i18n="prLink1">PR #4333 (closes #4332) ↗</a>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-proj">GO-TASK / TASK</div>
+        <h3 data-i18n="c2t">Optional remote includes error out offline when they aren't cached</h3>
+        <div class="case-body">
+          <p data-i18n="c2p"><span class="k">Problem</span>Marking a remote include optional: true in a Taskfile is supposed to mean “skip it if it isn't there locally”. But with --offline and no cache present, the program didn't skip — it reported a cache-not-found error and exited with code 106.</p>
+          <p data-i18n="c2q"><span class="k">Root Cause</span>include.Optional was only checked in NewNode, when the node is constructed, while the offline cache lookup for a remote file happens later, in Node.Read(). The check and the failure sit in different places, so the optional flag never took effect on the offline path.</p>
+          <p data-i18n="c2r"><span class="k">Fix</span>The check moved earlier, into include() in reader.go: before adding a node to the graph, try reading the local cache first, and skip outright when the node is optional, offline, and remote with no cache. Cache errors from nested non-optional remote includes are kept from being swallowed by an optional parent, and unit tests now cover the direct and nested optional combinations.</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged" data-i18n="merged2">Merged · Nov 6, 2026</span>
+          <a href="https://github.com/go-task/task/pull/3081" target="_blank" rel="noopener" data-i18n="prLink2">PR #3081 (closes #3076) ↗</a>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-proj">UBER / KRAKEN</div>
+        <h3 data-i18n="c3t">Reviving four TLS client tests that had been skipped for six years</h3>
+        <div class="case-body">
+          <p data-i18n="c3p"><span class="k">Problem</span>Four TLS client tests in utils/httputil had been skipped since 2019, sitting in the codebase year after year — nobody knew whether they would still pass.</p>
+          <p data-i18n="c3q"><span class="k">Root Cause</span>Unskipping them surfaced two unrelated failures. First, the generated test certificates carried only a CommonName and no SAN, which Go 1.15+'s x509 verification rejects outright. Second, a 2022 change had made HTTP fallback opt-in via EnableHTTPFallback, and the skipped tests had never caught up.</p>
+          <p data-i18n="c3r"><span class="k">Fix</span>Added DNSNames to the test certificate template, turned on EnableHTTPFallback() explicitly in the fallback test, and rebound the test server to 127.0.0.1:0 instead of a wildcard address. Test-only changes, verified locally with repeated -count=20 -race runs.</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged" data-i18n="merged3">Merged · Oct 27, 2026</span>
+          <a href="https://github.com/uber/kraken/pull/729" target="_blank" rel="noopener" data-i18n="prLink3">PR #729 (closes #230) ↗</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- 动态 -->
+    <section id="activity">
+      <div class="sec-label"><span data-i18n="secActivity">News &amp; Activity</span></div>
+
+      <div class="activity-wrap" id="activity-wrap" hidden>
+        <div class="grid-scroll"><div class="contrib-grid" id="contrib-grid"></div></div>
+        <div class="legend"><span data-i18n="legendLess">Less</span> <i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> <span data-i18n="legendMore">More</span></div>
+        <div class="activity-stats">
+          <div class="stat"><b id="stat-total">–</b><span data-i18n="statTotalLabel">Contributions (last 6 months)</span></div>
+          <div class="stat"><b id="stat-streak">–</b><span data-i18n="statStreakLabel">Longest streak</span></div>
+          <div class="stat"><b id="stat-max">–</b><span data-i18n="statMaxLabel">Peak day</span></div>
+        </div>
       </div>
-      <div class="card">
-        <h3><a href="https://github.com/Tidehyc/gorangefeed">gorangefeed</a></h3>
-        <p>短视频 Feed 流后端：发布→分发→消费→互动→通知全链路，垂直切片架构，单体 API + 独立 Worker</p>
-        <p class="stack">Go · Gin · MySQL · Redis · RabbitMQ</p>
+
+      <ul class="news">
+        <li><span class="date">2026-11-18</span><span class="txt" data-i18n="news1"><b>PR merged into redis/go-redis</b>: fixed false “pool exhausted” errors right after connection re-authentication.</span></li>
+        <li><span class="date">2026-11-16</span><span class="txt" data-i18n="news2"><b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.</span></li>
+        <li><span class="date">2026-11-10</span><span class="txt" data-i18n="news3"><b>Released orangecode</b>, my open-source Agent Harness.</span></li>
+        <li><span class="date">2026-11-06</span><span class="txt" data-i18n="news4"><b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.</span></li>
+        <li><span class="date">2026-10-27</span><span class="txt" data-i18n="news5"><b>PR merged into uber/kraken</b>: re-enabled four TLS client tests that had been skipped since 2019.</span></li>
+      </ul>
+
+      <div class="events" id="events" hidden>
+        <div class="ev-title" data-i18n="eventsTitle">Recent GitHub Activity</div>
+        <ul id="events-list"></ul>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="oss">
-    <h2>开源贡献 · <span class="en">Open Source</span></h2>
+    <!-- 观点 -->
+    <section id="views" class="views">
+      <div class="sec-label"><span data-i18n="secViews">Principles — How I Work</span></div>
+      <div class="view">
+        <div class="big"><span class="no">01</span><span data-i18n="view1Title">Reproduce first, then fix.</span></div>
+        <p data-i18n="view1Body">Before opening a PR, reproduce the issue locally, exactly as it happens. If it can't be reproduced, don't rush to a conclusion.</p>
+      </div>
+      <div class="view">
+        <div class="big"><span class="no">02</span><span data-i18n="view2Title">Keep it verifiable.</span></div>
+        <p data-i18n="view2Body">In résumés and PR descriptions, write only what can be verified: every number with a source, every conclusion open to re-checking.</p>
+      </div>
+      <div class="view">
+        <div class="big"><span class="no">03</span><span data-i18n="view3Title">Fix once, test forever.</span></div>
+        <p data-i18n="view3Body">Every fix ships with a regression test, so the same problem never gets a second chance.</p>
+      </div>
+    </section>
 
-    <div class="contrib">
-      <span class="proj"><a href="https://github.com/uber/kraken">uber/kraken</a></span>
-      <span class="loc">（Uber 的分布式 P2P Docker 镜像分发系统）</span>
-      <p>贡献者：参与后端可观测性、稳定性与测试方面的优化。</p>
-      <p class="en-sub">Contributor to uber/kraken, Uber's distributed P2P Docker registry: contributed to backend observability, stability, and testing improvements.</p>
-    </div>
+    <!-- 联系 -->
+    <section id="contact" class="contact">
+      <div class="sec-label"><span data-i18n="secContact">Contact</span></div>
+      <p data-i18n="contactLead">Get in touch about Go, open source, or internship opportunities:</p>
+      <div class="ways">
+        <span><span data-i18n="contactEmailLabel">Email</span> · <a href="mailto:tidehyc3234@163.com">tidehyc3234@163.com</a></span>
+        <span>GitHub · <a href="https://github.com/Tidehyc" target="_blank" rel="noopener">@Tidehyc ↗</a></span>
+      </div>
+    </section>
 
-    <div class="contrib">
-      <span class="proj"><a href="https://github.com/go-task/task">go-task/task</a></span>
-      <span class="loc">（Go 的任务运行器）</span>
-      <p>贡献者：参与离线模式下远端 include 缓存处理与测试方面的优化。</p>
-      <p class="en-sub">Contributor to go-task/task, the Go task runner: contributed to offline-mode remote include cache handling and testing improvements.</p>
-    </div>
+    <footer>
+      <span data-i18n="footerLeft">© 2026 Tide · Xiamen</span>
+      <span>Built with plain HTML / CSS / JS</span>
+    </footer>
 
-    <div class="contrib">
-      <span class="proj"><a href="https://github.com/redis/go-redis">redis/go-redis</a></span>
-      <span class="loc">（Go 的 Redis 客户端）</span>
-      <p>贡献者：参与连接池重新认证时序处理与测试方面的优化。</p>
-      <p class="en-sub">Contributor to redis/go-redis, the Redis client for Go: contributed to connection pool re-authentication timing handling and testing improvements.</p>
-    </div>
-  </section>
-
-  <section id="earlier">
-    <h2>早期项目 · <span class="en">Earlier Work</span></h2>
-    <p class="en-sub" style="margin-bottom:10px;">C++ 时期（2025 — 2026）</p>
-    <ul class="simple">
-      <li>
-        <span class="name"><a href="https://github.com/Tidehyc/fileagent-server">fileagent-server</a></span><br>
-        <span class="desc">AI 智能文件管理服务：本地大模型理解文件语义，MySQL 持久化</span><br>
-        <span class="stack">C++20 · Drogon · epoll · MySQL · llama.cpp</span>
-      </li>
-      <li>
-        <span class="name"><a href="https://github.com/Tidehyc/cpp-connection-thread-pool">cpp-connection-thread-pool</a></span><br>
-        <span class="desc">MySQL 数据库连接池与通用线程池实现</span><br>
-        <span class="stack">C++ · MySQL</span>
-      </li>
-      <li>
-        <span class="name"><a href="https://github.com/Tidehyc/cpp-ai-chat-server">cpp-ai-chat-server</a></span><br>
-        <span class="desc">AI 聊天服务器：多轮 AI 对话、好友私聊与群聊房间，支持离线消息推送</span><br>
-        <span class="stack">C++17 · Boost.Asio · WebSocket · SQLite</span>
-      </li>
-    </ul>
-  </section>
-
-  <section id="contact" class="contact">
-    <h2>联系 · <span class="en">Contact</span></h2>
-    <p><strong>Email</strong> — <a href="mailto:tidehyc3234@163.com">tidehyc3234@163.com</a></p>
-    <p><strong>GitHub</strong> — <a href="https://github.com/Tidehyc">@Tidehyc</a></p>
-  </section>
-
+  </main>
 </div>
 
-<footer>
-  © 2026 Tide · Xiamen University
-</footer>
+<script>
+(function(){
+  "use strict";
 
+  /* ================= 双语文案（定稿见 copy-deck.md） ================= */
+  var I18N = {
+    en: {
+      metaTitle: "Tide · Go Backend · Xiamen University",
+      metaDesc: "Tide's homepage — a Xiamen University student building Go backends and contributing to open source: projects, bug-fix case studies, and what I'm doing now.",
+      avatarAlt: "Tide's GitHub avatar",
+      role: "Go Backend · Xiamen University",
+      creed: "Reproduce first, then fix.",
+      navProjects: "Projects",
+      navCases: "Cases",
+      navActivity: "Activity",
+      navViews: "Principles",
+      navContact: "Contact",
+      intro1: "I'm Tide, and I've had PRs merged into redis/go-redis (22k★), go-task/task (16k★), and uber/kraken (6.7k★). I'm a Communication Engineering undergrad at Xiamen University (Class of 2028). I started with C++, then moved to Go for backend and open-source work; I build my own projects to learn. Lately, I've been building up cloud-native and platform engineering, and looking for a Go backend internship.",
+      nowTitle: "Now",
+      nowUpdated: "Last updated: Nov 2026",
+      now1: "<b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.",
+      now2: "<b>Learning cloud-native and platform engineering</b> — my direction is Go backend + cloud-native.",
+      now3: "<b>Iterating on orangecode</b>, my open-source Agent Harness project.",
+      secProjects: "Projects",
+      secCases: "Case Studies — Bugs I've Fixed",
+      secActivity: "News & Activity",
+      secViews: "Principles — How I Work",
+      secContact: "Contact",
+      frameUrl: "orangecode — tui · live capture",
+      tuiAlt: "orangecode terminal UI, live capture: the main screen, with the ORANGE CODE banner, session history panel, and status bar",
+      ocHook: "An Agent Harness that runs multiple tasks at once — and remembers the context.",
+      ocDesc: "An open-source agent harness for <b>concurrent tasks and multi-turn conversations</b>. It organizes task execution with <b>Spine semantics</b>, routes context via <b>KNN semantic routing</b>, and tracks per-call costs with <b>CostLedger</b>. Session exports carry <b>SHA-256 signatures</b> — verifiable and tamper-proof.",
+      feedHook: "What happens between a short video being posted and it showing up in your feed.",
+      feedDesc: "A short-video feed backend spanning publishing → distribution → consumption → interaction → notification. Structured around <b>vertical slices</b>, each stage its own module; split at runtime into a monolithic API and standalone workers, with time-consuming work like notifications routed through asynchronous queues so the request path stays unblocked.",
+      taskHook: "Tasks written to MySQL don't get lost — if a worker dies, another one picks them up.",
+      taskDesc: "An embeddable MySQL transactional task queue for Go services: business data and task rows are written in the same transaction, so once it commits, nothing is lost. Claiming runs on leases plus <b>fencing tokens</b>, so late writes from an old worker get rejected; failures retry with exponential backoff and land in a dead-letter queue once exhausted. Released as <b>v0.1.0</b>, with CI and real-database integration tests. Measured on a dev machine (Oct 2026): 10,000 same-transaction enqueues at 100% integrity, and tasks picked up about 2–3.7 seconds after a worker stopped renewing its lease.",
+      tagTaskQueue: "Task Queue",
+      repoLink: "GitHub repo ↗",
+      fn1Name: "Publish", fn1Sub: "posting a video",
+      fn2Name: "Distribution", fn2Sub: "push–pull hybrid",
+      fn3Name: "Consumption", fn3Sub: "paginated feed",
+      fn4Name: "Interaction", fn4Sub: "likes & favorites, counted",
+      fn5Name: "Notifications", fn5Sub: "async queue",
+      tn1Name: "Enqueue", tn1Sub: "same transaction as the business row",
+      tn2Name: "Claim", tn2Sub: "fencing token blocks duplicate execution",
+      tn3Name: "Execute", tn3Sub: "local handler",
+      tn4Name: "Done", tn4Sub: "confirmed on success",
+      taskNote: "On failure, retries back off exponentially; past the limit, tasks go to a dead-letter queue. If a worker dies mid-run, another worker picks its tasks up once the lease expires.",
+      c1t: "False “pool exhausted” right after connection re-authentication",
+      c1p: "<span class=\"k\">Problem</span>With MaxActiveConns set to 1, a connection that has just finished re-authenticating is already idle — yet the very next command can still fail with “connection pool exhausted”. Running a reproduction script against the unfixed code, it hit about 51 times in 1,000 runs under -race.",
+      c1q: "<span class=\"k\">Root Cause</span>getConn first scans the idle connections with popIdle, but a connection mid-re-authentication is marked InUse and gets skipped. By the time the flow reaches the capacity check, that connection is back to Idle — yet the check only counts connections still flagged Unusable / InUse, so it misjudges the pool as full, goes off to dial, and hits the hard limit.",
+      c1r: "<span class=\"k\">Fix</span>At the capacity limit, before dialing or erroring out, re-check the idle list once: if a connection has become available, retry claiming it. One check only, no new waiting — the PoolTimeout budget and TryGet's non-blocking semantics stay untouched. The regression test was strengthened to 200 rapid credential rotations with concurrent PINGs, and it fails reliably on the unfixed code.",
+      merged1: "Merged · Nov 18, 2026",
+      prLink1: "PR #4333 (closes #4332) ↗",
+      c2t: "Optional remote includes error out offline when they aren't cached",
+      c2p: "<span class=\"k\">Problem</span>Marking a remote include optional: true in a Taskfile is supposed to mean “skip it if it isn't there locally”. But with --offline and no cache present, the program didn't skip — it reported a cache-not-found error and exited with code 106.",
+      c2q: "<span class=\"k\">Root Cause</span>include.Optional was only checked in NewNode, when the node is constructed, while the offline cache lookup for a remote file happens later, in Node.Read(). The check and the failure sit in different places, so the optional flag never took effect on the offline path.",
+      c2r: "<span class=\"k\">Fix</span>The check moved earlier, into include() in reader.go: before adding a node to the graph, try reading the local cache first, and skip outright when the node is optional, offline, and remote with no cache. Cache errors from nested non-optional remote includes are kept from being swallowed by an optional parent, and unit tests now cover the direct and nested optional combinations.",
+      merged2: "Merged · Nov 6, 2026",
+      prLink2: "PR #3081 (closes #3076) ↗",
+      c3t: "Reviving four TLS client tests that had been skipped for six years",
+      c3p: "<span class=\"k\">Problem</span>Four TLS client tests in utils/httputil had been skipped since 2019, sitting in the codebase year after year — nobody knew whether they would still pass.",
+      c3q: "<span class=\"k\">Root Cause</span>Unskipping them surfaced two unrelated failures. First, the generated test certificates carried only a CommonName and no SAN, which Go 1.15+'s x509 verification rejects outright. Second, a 2022 change had made HTTP fallback opt-in via EnableHTTPFallback, and the skipped tests had never caught up.",
+      c3r: "<span class=\"k\">Fix</span>Added DNSNames to the test certificate template, turned on EnableHTTPFallback() explicitly in the fallback test, and rebound the test server to 127.0.0.1:0 instead of a wildcard address. Test-only changes, verified locally with repeated -count=20 -race runs.",
+      merged3: "Merged · Oct 27, 2026",
+      prLink3: "PR #729 (closes #230) ↗",
+      legendLess: "Less",
+      legendMore: "More",
+      statTotalLabel: "Contributions (last 6 months)",
+      statStreakLabel: "Longest streak",
+      statMaxLabel: "Peak day",
+      news1: "<b>PR merged into redis/go-redis</b>: fixed false “pool exhausted” errors right after connection re-authentication.",
+      news2: "<b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.",
+      news3: "<b>Released orangecode</b>, my open-source Agent Harness.",
+      news4: "<b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.",
+      news5: "<b>PR merged into uber/kraken</b>: re-enabled four TLS client tests that had been skipped since 2019.",
+      eventsTitle: "Recent GitHub Activity",
+      view1Title: "Reproduce first, then fix.",
+      view1Body: "Before opening a PR, reproduce the issue locally, exactly as it happens. If it can't be reproduced, don't rush to a conclusion.",
+      view2Title: "Keep it verifiable.",
+      view2Body: "In résumés and PR descriptions, write only what can be verified: every number with a source, every conclusion open to re-checking.",
+      view3Title: "Fix once, test forever.",
+      view3Body: "Every fix ships with a regression test, so the same problem never gets a second chance.",
+      contactLead: "Get in touch about Go, open source, or internship opportunities:",
+      contactEmailLabel: "Email",
+      footerLeft: "© 2026 Tide · Xiamen"
+    },
+    cn: {
+      metaTitle: "Tide · 厦门大学 · Go 后端",
+      metaDesc: "Tide 的个人主页：厦门大学在读，Go 后端与开源贡献，项目、修过的 Bug 与近况。",
+      avatarAlt: "Tide 的 GitHub 头像",
+      role: "厦门大学 · Go 后端",
+      creed: "先复现，再动手。",
+      navProjects: "项目",
+      navCases: "案例",
+      navActivity: "动态",
+      navViews: "观点",
+      navContact: "联系",
+      intro1: "我是 Tide，给 redis/go-redis（22k★）、go-task/task（16k★）和 uber/kraken（6.7k★）合并过 PR。目前在厦门大学读通信工程（2028 届），从 C++ 转 Go 搞后端与开源，平时做项目练手。最近在补云原生与平台工程，也在找 Go 后端实习。",
+      nowTitle: "Now · 现在在做的事",
+      nowUpdated: "最后更新 2026-11",
+      now1: "<b>持续给 uber/kraken 和其他 Go 开源项目贡献代码</b>，有新问题先在本地复现再说。",
+      now2: "<b>在学云原生与平台工程</b>，方向是 Go 后端 + 云原生。",
+      now3: "持续迭代<b>自己的 Agent Harness 项目 orangecode</b>。",
+      secProjects: "项目",
+      secCases: "案例 · 我修过的 Bug",
+      secActivity: "动态",
+      secViews: "观点 · 我做事的方式",
+      secContact: "联系",
+      frameUrl: "orangecode — tui 实拍",
+      tuiAlt: "orangecode 终端界面实拍：主界面，含 ORANGE CODE 字标、历史会话面板与状态栏",
+      ocHook: "一个能同时跑多个任务、还能记住上下文的 Agent Harness。",
+      ocDesc: "面向<b>多任务并发与多轮对话</b>的开源 Agent Harness。调度层用 <b>Spine</b> 语义组织任务执行脉络；上下文路由走 <b>KNN 语义路由</b>，并通过 <b>CostLedger 成本账本</b>记录每次调用花销；会话导出带 <b>SHA-256 签名</b>，可校验、防篡改。",
+      feedHook: "一条短视频从投稿到被刷到，中间发生了什么。",
+      feedDesc: "短视频 Feed 流后端，覆盖<b>发布 → 分发 → 消费 → 互动 → 通知</b>全链路。代码按<b>垂直切片</b>组织，每个环节一个独立模块；运行时拆成单体 API + 独立 Worker，通知这类耗时活走异步队列，不堵请求路径。",
+      taskHook: "任务写进 MySQL 就不怕丢，Worker 挂了也能接着跑。",
+      taskDesc: "可嵌入 Go 服务的 <b>MySQL 事务型持久化任务队列</b>：业务数据和任务行写在同一个事务里，提交了就不会丢。领取走租约 + <b>fencing token</b>，旧 Worker 的迟到写回会被拒绝；失败退避重试，耗尽进死信。<b>v0.1.0 已发布</b>，带 CI 与真库集成测试；实测（开发机，2026-10）10,000 笔同事务入队完整率 100%，Worker 停止续租后约 2–3.7 秒任务被接手。",
+      tagTaskQueue: "任务队列",
+      repoLink: "GitHub 仓库 ↗",
+      fn1Name: "发布", fn1Sub: "视频投稿",
+      fn2Name: "分发", fn2Sub: "推拉结合",
+      fn3Name: "消费", fn3Sub: "Feed 流分页",
+      fn4Name: "互动", fn4Sub: "点赞收藏计数",
+      fn5Name: "通知", fn5Sub: "异步队列",
+      tn1Name: "入队", tn1Sub: "与业务行同一事务",
+      tn2Name: "租约领取", tn2Sub: "fencing token 防重复执行",
+      tn3Name: "执行", tn3Sub: "本地 Handler",
+      tn4Name: "完成", tn4Sub: "成功确认",
+      taskNote: "失败则指数退避重试，超过上限进死信队列；Worker 中途宕机，租约过期后任务会被其他 Worker 重新接手。",
+      c1t: "连接池在重新认证完成的瞬间，误报「池已耗尽」",
+      c1p: "<span class=\"k\">问题</span>连接池上限 MaxActiveConns 设为 1 时，一条连接刚完成重新认证、明明已经空闲，紧接着发出的命令却会报 connection pool exhausted。用复现脚本在未修复的代码上跑，-race 下 1,000 次里约 51 次中招。",
+      c1q: "<span class=\"k\">定位</span>getConn 先用 popIdle 扫一遍空闲连接，此时正在重新认证的连接处于 InUse 状态、被跳过；等流程走到后面的容量检查时，连接其实已经回到 Idle，但容量检查只认还标着 Unusable / InUse 的连接，于是误判池已满，转去拨号又撞上硬上限。",
+      c1r: "<span class=\"k\">修法</span>在容量上限处、走拨号和报错之前，对空闲列表做一次性重查：若已有连接变得可获取，就重试领取。只查一次、不新增任何等待，PoolTimeout 预算与 TryGet 的非阻塞语义保持不变。回归测试也随之加强成 200 次快速轮换凭据加并发 PING，未修复时稳定失败。",
+      merged1: "已合并 · 2026-11-18",
+      prLink1: "PR #4333（关闭 #4332）↗",
+      c2t: "离线模式下，标了 optional 的远程 include 没缓存就直接报错退出",
+      c2p: "<span class=\"k\">问题</span>Taskfile 里把远程 include 标成 optional: true，本意是「本地没有就跳过」；但在 --offline 且缓存不存在时，程序并不跳过，而是报缓存未找到的错误、以退出码 106 结束。",
+      c2q: "<span class=\"k\">定位</span>include.Optional 只在构造节点的 NewNode 里被检查，而远程文件的离线缓存查找发生在更晚的 Node.Read() 阶段——检查点和真正出错的位置错开了，optional 的语义在离线路径上根本没生效。",
+      c2r: "<span class=\"k\">修法</span>在 reader.go 的 include() 里把检查前移：往图里加节点之前，先试读一次本地缓存；optional + 离线 + 远程节点且缓存不存在时直接跳过。同时保证嵌套的非 optional 远程 include 的缓存错误不会被外层 optional 父级吞掉，并补了覆盖直接与嵌套 optional 组合的单元测试。",
+      merged2: "已合并 · 2026-11-06",
+      prLink2: "PR #3081（关闭 #3076）↗",
+      c3t: "四个被跳过了六年的 TLS 测试",
+      c3p: "<span class=\"k\">问题</span>utils/httputil 里的四个 TLS 客户端测试自 2019 年起一直被 skip 掉，年年躺在代码库里，没人知道它们到底还能不能过。",
+      c3q: "<span class=\"k\">定位</span>把 skip 摘掉后，暴露出两个互不相干的失败：一是测试生成的证书只填了 CommonName、没有 SAN，Go 1.15 起 x509 校验直接拒绝这种证书；二是 2022 年的一次改动把 HTTP 回退改成了需要显式开启（EnableHTTPFallback），而被跳过的测试从没跟上这个变化。",
+      c3r: "<span class=\"k\">修法</span>给测试证书模板补上 DNSNames；回退测试显式开启 EnableHTTPFallback()；顺手把测试服务器的监听地址改绑 127.0.0.1:0，不再占用通配地址。纯测试改动，本地用 -count=20 -race 反复跑过验证。",
+      merged3: "已合并 · 2026-10-27",
+      prLink3: "PR #729（关闭 #230）↗",
+      legendLess: "少",
+      legendMore: "多",
+      statTotalLabel: "近半年总贡献",
+      statStreakLabel: "最长连续天数",
+      statMaxLabel: "单日最高贡献",
+      news1: "<b>PR 合并入 redis/go-redis</b>：修掉连接池在重新认证完成瞬间误报耗尽的问题。",
+      news2: "<b>向 pingcap/tidb 提交 PR</b>：memtable 字段类型克隆修复。",
+      news3: "<b>发布 orangecode</b>：自己的开源 Agent Harness 项目。",
+      news4: "<b>PR 合并入 go-task/task</b>：离线模式下跳过未缓存的可选远程 include。",
+      news5: "<b>PR 合并入 uber/kraken</b>：重新启用四个被跳过的 TLS 客户端测试。",
+      eventsTitle: "GITHUB 最近动态",
+      view1Title: "先复现，再修复。",
+      view1Body: "提 PR 之前，先在本地把问题原样跑出来。复现不了的问题，不急着下结论。",
+      view2Title: "不夸大、不虚构。",
+      view2Body: "简历和 PR 描述只写能验证的东西：数字要有出处，结论要能复查。",
+      view3Title: "改一处，测一处。",
+      view3Body: "每个修复都配回归测试，让同一个问题没有第二次出现的机会。",
+      contactLead: "找我聊聊 Go、开源，或者实习机会：",
+      contactEmailLabel: "邮箱",
+      footerLeft: "© 2026 Tide · 厦门"
+    }
+  };
+
+  var LANG = "en";
+  try {
+    var saved = localStorage.getItem("tide-lang");
+    if (saved === "cn" || saved === "en") LANG = saved;
+  } catch (e) {}
+
+  function t(key) {
+    return (I18N[LANG] && I18N[LANG][key]) || I18N.en[key] || "";
+  }
+
+  /* ---------- 动态区数据（供切换语言时重渲染） ---------- */
+  var contribData = null;   /* { byDate, total, maxDay, streak, start, end } */
+  var eventsData = null;    /* GitHub events 原始数组 */
+
+  function fmtDate(dt) {
+    var m = String(dt.getMonth() + 1).padStart(2, "0");
+    var dd = String(dt.getDate()).padStart(2, "0");
+    return dt.getFullYear() + "-" + m + "-" + dd;
+  }
+
+  function renderContrib() {
+    if (!contribData) return;
+    var grid = document.getElementById("contrib-grid");
+    grid.innerHTML = "";
+    var todayStr = fmtDate(new Date());
+    var cur = new Date(contribData.start);
+    while (cur <= contribData.end) {
+      var key = fmtDate(cur);
+      var cell = document.createElement("i");
+      var d = contribData.byDate[key];
+      if (d && key <= todayStr) {
+        var lv = Math.max(0, Math.min(4, d.level || 0));
+        if (lv > 0) cell.className = "l" + lv;
+        cell.title = LANG === "cn"
+          ? key + " · " + d.count + " 次贡献"
+          : key + " · " + d.count + (d.count === 1 ? " contribution" : " contributions");
+      }
+      grid.appendChild(cell);
+      cur.setDate(cur.getDate() + 1);
+    }
+    document.getElementById("stat-total").textContent = contribData.total;
+    document.getElementById("stat-streak").textContent = LANG === "cn"
+      ? contribData.streak + " 天"
+      : contribData.streak + (contribData.streak === 1 ? " day" : " days");
+    document.getElementById("stat-max").textContent = contribData.maxDay;
+    document.getElementById("activity-wrap").hidden = false;
+  }
+
+  /* ---------- 相对时间 ---------- */
+  function relTime(iso) {
+    var then = new Date(iso).getTime();
+    var diff = Date.now() - then;
+    var min = Math.floor(diff / 60000);
+    var cn = LANG === "cn";
+    if (min < 1) return cn ? "刚刚" : "just now";
+    if (min < 60) return cn ? min + " 分钟前" : min + " min ago";
+    var h = Math.floor(min / 60);
+    if (h < 24) return cn ? h + " 小时前" : h + " hr ago";
+    var d = Math.floor(h / 24);
+    if (d < 30) return cn ? d + " 天前" : d + (d === 1 ? " day ago" : " days ago");
+    var m = Math.floor(d / 30);
+    if (m < 12) return cn ? m + " 个月前" : m + " mo ago";
+    var y = Math.floor(m / 12);
+    return cn ? y + " 年前" : y + " yr ago";
+  }
+
+  function evText(ev) {
+    var repo = ev.repo && ev.repo.name;
+    if (!repo) return null;
+    var cn = LANG === "cn";
+    if (ev.type === "PushEvent") {
+      var n = (ev.payload.commits || []).length || 1;
+      return cn
+        ? "向 <b>" + repo + "</b> 推送了 " + n + " 个提交"
+        : "Pushed " + n + (n === 1 ? " commit" : " commits") + " to <b>" + repo + "</b>";
+    }
+    if (ev.type === "PullRequestEvent") {
+      var merged = ev.payload.pull_request && ev.payload.pull_request.merged;
+      var act = ev.payload.action;
+      if (cn) return (merged ? "合并" : act === "opened" ? "打开" : act) + "了 <b>" + repo + "</b> 的 PR #" + ev.payload.number;
+      return (merged ? "Merged" : act === "opened" ? "Opened" : act) + " PR #" + ev.payload.number + " in <b>" + repo + "</b>";
+    }
+    if (ev.type === "IssuesEvent") {
+      var opened = ev.payload.action === "opened";
+      if (cn) return "在 <b>" + repo + "</b> " + (opened ? "打开了" : "更新了") + " issue #" + ev.payload.issue.number;
+      return (opened ? "Opened" : "Updated") + " issue #" + ev.payload.issue.number + " in <b>" + repo + "</b>";
+    }
+    if (ev.type === "CreateEvent" && ev.payload.ref_type === "repository") {
+      return cn ? "创建了仓库 <b>" + repo + "</b>" : "Created repository <b>" + repo + "</b>";
+    }
+    return null;
+  }
+
+  function renderEvents() {
+    if (!eventsData) return;
+    var items = [];
+    for (var i = 0; i < eventsData.length && items.length < 5; i++) {
+      var txt = evText(eventsData[i]);
+      if (txt) items.push("<li>" + relTime(eventsData[i].created_at) + " · " + txt + "</li>");
+    }
+    if (!items.length) return;
+    document.getElementById("events-list").innerHTML = items.join("");
+    document.getElementById("events").hidden = false;
+  }
+
+  /* ---------- 语言切换 ---------- */
+  function applyLang(lang) {
+    LANG = lang;
+    try { localStorage.setItem("tide-lang", lang); } catch (e) {}
+    document.documentElement.lang = lang === "cn" ? "zh-CN" : "en";
+    document.title = t("metaTitle");
+    var md = document.getElementById("metaDesc");
+    if (md) md.setAttribute("content", t("metaDesc"));
+    var nodes = document.querySelectorAll("[data-i18n]");
+    Array.prototype.forEach.call(nodes, function (el) {
+      var v = t(el.getAttribute("data-i18n"));
+      if (v) el.innerHTML = v;
+    });
+    var av = document.getElementById("avatarImg");
+    if (av) av.alt = t("avatarAlt");
+    var ti = document.getElementById("tuiImg");
+    if (ti) ti.alt = t("tuiAlt");
+    document.getElementById("lang-en").classList.toggle("active", lang === "en");
+    document.getElementById("lang-cn").classList.toggle("active", lang === "cn");
+    renderContrib();
+    renderEvents();
+  }
+
+  document.getElementById("lang-en").addEventListener("click", function () { applyLang("en"); });
+  document.getElementById("lang-cn").addEventListener("click", function () { applyLang("cn"); });
+  applyLang(LANG);
+
+  /* ---------- 导航滚动高亮 ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll("#sidenav a"));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          links.forEach(function(a){ a.classList.remove("active"); });
+          var a = map[e.target.id];
+          if (a) a.classList.add("active");
+        }
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    ["projects","cases","activity","views","contact"].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  /* ---------- 贡献活动图（橙色自渲染） ---------- */
+  fetch("https://github-contributions-api.jogruber.de/v4/Tidehyc")
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data){
+      var all = (data && data.contributions) || [];
+      if (!all.length) return;
+      all.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+
+      /* 最近约 26 周 */
+      var win = all.slice(-182);
+      if (!win.length) return;
+
+      var total = 0, maxDay = 0, streak = 0, run = 0;
+      var byDate = {};
+      win.forEach(function(d){
+        byDate[d.date] = d;
+        total += d.count;
+        if (d.count > maxDay) maxDay = d.count;
+        if (d.count > 0) { run++; if (run > streak) streak = run; }
+        else run = 0;
+      });
+
+      /* 网格：按周列对齐，第一列从周日开始 */
+      var last = new Date(win[win.length - 1].date + "T00:00:00");
+      var end = new Date(last); end.setDate(end.getDate() + (6 - end.getDay())); /* 本周六 */
+      var start = new Date(end); start.setDate(start.getDate() - (26 * 7 - 1));
+
+      contribData = { byDate: byDate, total: total, maxDay: maxDay, streak: streak, start: start, end: end };
+      renderContrib();
+    })
+    .catch(function(){ /* 失败则整块隐藏，只保留 News 文字流 */ });
+
+  /* ---------- GitHub 最近动态 ---------- */
+  fetch("https://api.github.com/users/Tidehyc/events/public?per_page=30")
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(events){
+      eventsData = events;
+      renderEvents();
+    })
+    .catch(function(){ /* 静默隐藏 */ });
+})();
+</script>
 </body>
 </html>
