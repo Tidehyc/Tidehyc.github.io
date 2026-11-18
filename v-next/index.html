@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tide · 厦门大学 · Go 后端</title>
+<meta name="description" content="Tide 的个人主页：厦门大学在读，Go 后端与开源贡献，项目、修过的 Bug 与近况。">
+<style>
+  :root{
+    --bg:#141210;
+    --bg-soft:#1B1813;
+    --card:#1D1A15;
+    --border:#2D2820;
+    --text:#EDE8DF;
+    --muted:#A89E8D;
+    --faint:#7E7666;
+    --orange:#F97316;
+    --orange-hi:#FB923C;
+    --orange-dim:rgba(249,115,22,.14);
+    --cell-0:#29241C;
+    --cell-1:#7C2D12;
+    --cell-2:#C2410C;
+    --cell-3:#EA580C;
+    --cell-4:#F97316;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.8;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--orange);color:#141210}
+  a{color:var(--orange);text-decoration:none}
+  a:hover{color:var(--orange-hi);text-decoration:underline}
+
+  /* ---------- 预览横幅 ---------- */
+  .preview-bar{
+    background:var(--orange);
+    color:#1A1206;
+    text-align:center;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.14em;
+    padding:5px 12px;
+  }
+
+  /* ---------- 双栏布局 ---------- */
+  .layout{
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    gap:56px;
+    padding:0 32px;
+  }
+
+  /* ---------- 左侧固定栏 ---------- */
+  .sidebar{
+    width:320px;
+    flex:0 0 320px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    padding:64px 0 40px;
+    display:flex;
+    flex-direction:column;
+  }
+  .sidebar .avatar{
+    width:104px;height:104px;border-radius:50%;
+    border:2px solid var(--orange);
+    display:block;
+  }
+  .sidebar h1{
+    font-size:52px;
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:.01em;
+    margin-top:26px;
+  }
+  .sidebar .role{
+    color:var(--orange);
+    font-size:17px;
+    font-weight:600;
+    margin-top:8px;
+  }
+  .sidebar .creed{
+    color:var(--muted);
+    font-size:16px;
+    margin-top:14px;
+  }
+  .sidebar nav{margin-top:44px}
+  .sidebar nav a{
+    display:flex;align-items:center;gap:12px;
+    color:var(--muted);
+    font-size:14px;
+    letter-spacing:.22em;
+    padding:7px 0;
+    text-decoration:none;
+    transition:color .2s;
+  }
+  .sidebar nav a::before{
+    content:"";
+    width:26px;height:1px;
+    background:var(--faint);
+    transition:width .25s,background .25s;
+  }
+  .sidebar nav a:hover{color:var(--text);text-decoration:none}
+  .sidebar nav a.active{color:var(--orange)}
+  .sidebar nav a.active::before{width:52px;background:var(--orange)}
+  .sidebar .side-foot{
+    margin-top:auto;
+    padding-top:32px;
+    font-size:14.5px;
+    color:var(--muted);
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .sidebar .side-foot a{color:var(--muted)}
+  .sidebar .side-foot a:hover{color:var(--orange);text-decoration:none}
+
+  /* ---------- 右侧内容 ---------- */
+  main{
+    flex:1;
+    min-width:0;
+    padding:64px 0 30px;
+  }
+  section{margin-bottom:84px;scroll-margin-top:28px}
+  .sec-label{
+    font-size:13px;
+    letter-spacing:.3em;
+    color:var(--orange);
+    font-weight:700;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .sec-label::after{content:"";flex:1;height:1px;background:var(--border)}
+  .sec-label .en{color:var(--faint);letter-spacing:.18em;font-weight:500}
+
+  /* 开场白 */
+  .intro p{
+    font-size:18.5px;
+    line-height:1.95;
+    color:var(--text);
+    max-width:44em;
+  }
+  .intro p + p{margin-top:14px}
+  .intro .dim{color:var(--muted);font-size:16.5px}
+
+  /* Now */
+  .now-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    border-radius:10px;
+    padding:22px 26px;
+  }
+  .now-card .now-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:12px;
+  }
+  .now-card .now-title{font-weight:700;font-size:16.5px}
+  .now-card .now-title .dot{color:var(--orange)}
+  .now-card .now-updated{color:var(--faint);font-size:13px}
+  .now-card ul{list-style:none}
+  .now-card li{
+    padding:7px 0 7px 20px;
+    position:relative;
+    color:var(--muted);
+    font-size:15.5px;
+  }
+  .now-card li::before{
+    content:"";
+    position:absolute;left:2px;top:17px;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--orange);
+  }
+  .now-card li b{color:var(--text);font-weight:600}
+
+  /* 项目大条目 */
+  .project{margin-bottom:64px}
+  .project:last-child{margin-bottom:0}
+  .project .visual{
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--bg-soft);
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .browser-frame .frame-bar{
+    display:flex;align-items:center;gap:7px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--border);
+    background:#211D16;
+  }
+  .browser-frame .frame-bar i{
+    width:11px;height:11px;border-radius:50%;
+    background:#3A342A;display:block;
+  }
+  .browser-frame .frame-bar i:first-child{background:var(--orange)}
+  .browser-frame .frame-url{
+    margin-left:10px;
+    font-size:12px;color:var(--faint);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  .browser-frame img{display:block;width:100%;height:auto}
+  .project h3{font-size:26px;font-weight:750;line-height:1.35}
+  .project h3 a{color:var(--text);text-decoration:none}
+  .project h3 a:hover{color:var(--orange);text-decoration:none}
+  .project .hook{
+    color:var(--orange);
+    font-size:16.5px;
+    font-weight:600;
+    margin-top:4px;
+  }
+  .project .desc{
+    color:var(--muted);
+    font-size:15.5px;
+    margin-top:10px;
+    max-width:46em;
+  }
+  .project .desc b{color:var(--text);font-weight:600}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .tags span{
+    font-size:12.5px;
+    color:var(--orange);
+    background:var(--orange-dim);
+    border-radius:999px;
+    padding:3px 12px;
+    letter-spacing:.03em;
+  }
+  .project .repo-link{
+    display:inline-block;margin-top:14px;font-size:14.5px;
+  }
+
+  /* 流水线 / 生命周期图 */
+  .diagram{padding:26px 22px;overflow-x:auto}
+  .flow{
+    display:flex;align-items:stretch;gap:0;
+    min-width:560px;
+  }
+  .flow-node{
+    flex:1;
+    border:1px solid var(--border);
+    border-top:2px solid var(--orange);
+    border-radius:8px;
+    background:var(--card);
+    padding:12px 10px 10px;
+    text-align:center;
+  }
+  .flow-node .fn-name{font-weight:700;font-size:15px}
+  .flow-node .fn-sub{color:var(--faint);font-size:12px;margin-top:2px;line-height:1.5}
+  .flow-arrow{
+    align-self:center;
+    color:var(--orange);
+    font-size:17px;
+    padding:0 7px;
+    flex:0 0 auto;
+  }
+  .diagram-note{
+    color:var(--faint);font-size:13px;
+    padding:0 22px 18px;
+    margin-top:-6px;
+  }
+
+  /* 案例 */
+  .case{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:26px 28px;
+    margin-bottom:22px;
+  }
+  .case:last-child{margin-bottom:0}
+  .case .case-proj{
+    color:var(--orange);
+    font-size:13px;font-weight:700;
+    letter-spacing:.14em;
+  }
+  .case h3{font-size:19.5px;font-weight:700;line-height:1.5;margin-top:5px}
+  .case .case-body{margin-top:12px}
+  .case .case-body p{
+    color:var(--muted);font-size:15px;
+    margin-bottom:9px;
+  }
+  .case .case-body p:last-child{margin-bottom:0}
+  .case .k{
+    color:var(--text);font-weight:700;
+    margin-right:6px;
+  }
+  .case .case-foot{
+    margin-top:16px;padding-top:13px;
+    border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    font-size:13.5px;color:var(--faint);
+  }
+  .case .case-foot .merged{color:var(--orange);font-weight:600}
+
+  /* 动态：活动图 */
+  .activity-wrap{margin-bottom:34px}
+  .grid-scroll{overflow-x:auto;padding-bottom:6px}
+  .contrib-grid{
+    display:grid;
+    grid-template-rows:repeat(7,11px);
+    grid-auto-flow:column;
+    grid-auto-columns:11px;
+    gap:3px;
+    width:max-content;
+  }
+  .contrib-grid i{
+    display:block;width:11px;height:11px;
+    border-radius:2.5px;
+    background:var(--cell-0);
+  }
+  .contrib-grid i.l1{background:var(--cell-1)}
+  .contrib-grid i.l2{background:var(--cell-2)}
+  .contrib-grid i.l3{background:var(--cell-3)}
+  .contrib-grid i.l4{background:var(--cell-4)}
+  .activity-stats{
+    display:flex;gap:38px;flex-wrap:wrap;
+    margin-top:16px;
+  }
+  .activity-stats .stat b{
+    display:block;
+    font-size:24px;font-weight:800;
+    color:var(--orange);
+    line-height:1.3;
+  }
+  .activity-stats .stat span{color:var(--faint);font-size:13px}
+  .legend{
+    display:flex;align-items:center;gap:4px;
+    color:var(--faint);font-size:12px;margin-top:10px;
+  }
+  .legend i{width:11px;height:11px;border-radius:2.5px;background:var(--cell-0);display:block}
+  .legend i.l1{background:var(--cell-1)}
+  .legend i.l2{background:var(--cell-2)}
+  .legend i.l3{background:var(--cell-3)}
+  .legend i.l4{background:var(--cell-4)}
+
+  /* News 流 */
+  .news{list-style:none}
+  .news li{
+    display:flex;gap:18px;align-items:baseline;
+    padding:9px 0;
+    border-bottom:1px dashed var(--border);
+    font-size:15.5px;
+  }
+  .news li:last-child{border-bottom:none}
+  .news .date{
+    flex:0 0 96px;
+    color:var(--faint);
+    font-size:13.5px;
+    font-variant-numeric:tabular-nums;
+    position:relative;
+    padding-left:16px;
+  }
+  .news .date::before{
+    content:"";
+    position:absolute;left:0;top:9px;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--orange);
+  }
+  .news .txt{color:var(--muted)}
+  .news .txt b{color:var(--text);font-weight:600}
+
+  .events{margin-top:26px}
+  .events .ev-title{
+    color:var(--faint);font-size:13px;letter-spacing:.2em;margin-bottom:8px;
+  }
+  .events ul{list-style:none}
+  .events li{
+    font-size:13.5px;color:var(--faint);
+    padding:3px 0;
+  }
+  .events li b{color:var(--muted);font-weight:600}
+
+  /* 观点 */
+  .views .view{margin-bottom:38px}
+  .views .view:last-child{margin-bottom:0}
+  .views .view .big{
+    font-size:27px;font-weight:750;line-height:1.45;
+  }
+  .views .view .big .no{color:var(--orange);margin-right:12px}
+  .views .view p{color:var(--muted);font-size:15.5px;margin-top:6px;max-width:42em}
+
+  /* 联系 / 页脚 */
+  .contact p{font-size:18px;max-width:40em}
+  .contact .ways{margin-top:16px;font-size:16.5px;display:flex;flex-direction:column;gap:6px}
+  footer{
+    border-top:1px solid var(--border);
+    padding:22px 0 8px;
+    color:var(--faint);
+    font-size:13px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  /* 移动端 */
+  @media (max-width:900px){
+    .layout{flex-direction:column;gap:0;padding:0 22px}
+    .sidebar{
+      position:static;height:auto;width:100%;flex:none;
+      padding:44px 0 6px;
+    }
+    .sidebar h1{font-size:42px}
+    .sidebar nav{display:none}
+    .sidebar .side-foot{margin-top:26px;padding-top:0}
+    main{padding:34px 0 20px}
+    section{margin-bottom:60px}
+    .news .date{flex-basis:86px}
+  }
+</style>
+</head>
+<body>
+
+<div class="preview-bar">新版预览 · v-next</div>
+
+<div class="layout">
+
+  <!-- ================= 左侧固定栏 ================= -->
+  <aside class="sidebar">
+    <img class="avatar" src="https://github.com/Tidehyc.png" alt="Tide 的 GitHub 头像" width="104" height="104">
+    <h1>Tide</h1>
+    <div class="role">厦门大学 · Go 后端</div>
+    <p class="creed">先复现，再动手。</p>
+    <nav id="sidenav">
+      <a href="#projects">项目</a>
+      <a href="#cases">案例</a>
+      <a href="#activity">动态</a>
+      <a href="#views">观点</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <div class="side-foot">
+      <a href="mailto:tidehyc3234@163.com">tidehyc3234@163.com</a>
+      <a href="https://github.com/Tidehyc" target="_blank" rel="noopener">github.com/Tidehyc ↗</a>
+    </div>
+  </aside>
+
+  <!-- ================= 右侧内容 ================= -->
+  <main>
+
+    <!-- 开场白 -->
+    <section class="intro" id="intro">
+      <p>我是 Tide，厦门大学通信工程专业在读，2028 年毕业。最开始写的是 C++，后来转到 Go，就一路做到后端和开源上来：一边写自己的项目练手，一边给真正有人在用的开源项目提 PR——到现在，已经给三个知名开源项目合并过 PR：uber/kraken（6.7k★）、go-task/task（16k★）、redis/go-redis（22k★）。</p>
+      <p class="dim">最近在找 Go 后端方向的实习机会，也在把云原生和平台工程这条线慢慢补上。</p>
+    </section>
+
+    <!-- Now -->
+    <section id="now">
+      <div class="now-card">
+        <div class="now-head">
+          <div class="now-title"><span class="dot">●</span> Now · 现在在做的事</div>
+          <div class="now-updated">最后更新 2026-11</div>
+        </div>
+        <ul>
+          <li><b>持续给 uber/kraken 和其他 Go 开源项目贡献代码</b>，有新问题就先在本地复现再说。</li>
+          <li><b>在学云原生与平台工程</b>，方向定在 Go 后端 + 云原生。</li>
+          <li><b>自己的 Agent Harness 项目 orangecode 在持续迭代</b>。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 项目 -->
+    <section id="projects">
+      <div class="sec-label">项目 <span class="en">Projects</span></div>
+
+      <article class="project">
+        <div class="visual browser-frame">
+          <div class="frame-bar"><i></i><i></i><i></i><span class="frame-url">orangecode — tui</span></div>
+          <img src="https://raw.githubusercontent.com/Tidehyc/orangecode/master/docs/images/tui.png" alt="orangecode 的终端界面截图">
+        </div>
+        <h3><a href="https://github.com/Tidehyc/orangecode" target="_blank" rel="noopener">orangecode</a></h3>
+        <div class="hook">一个能同时跑多个任务、还能记住上下文的 Agent Harness。</div>
+        <p class="desc">面向<b>多任务并发与多轮对话</b>的开源 Agent Harness。调度层用 Spine 语义组织任务的执行脉络；上下文路由走 <b>KNN 语义路由</b>，并用 <b>CostLedger 成本账本</b>把每次调用的花费记清楚；会话导出带 <b>SHA-256 签名</b>，可校验、防篡改。</p>
+        <div class="tags"><span>Python</span><span>TypeScript</span><span>Agent Harness</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/orangecode" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+      </article>
+
+      <article class="project">
+        <div class="visual">
+          <div class="diagram">
+            <div class="flow">
+              <div class="flow-node"><div class="fn-name">发布</div><div class="fn-sub">视频投稿</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">分发</div><div class="fn-sub">推拉结合</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">消费</div><div class="fn-sub">Feed 流分页</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">互动</div><div class="fn-sub">点赞收藏计数</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">通知</div><div class="fn-sub">异步队列</div></div>
+            </div>
+          </div>
+        </div>
+        <h3><a href="https://github.com/Tidehyc/gorangefeed" target="_blank" rel="noopener">gorangefeed</a></h3>
+        <div class="hook">一条短视频从投稿到被刷到，中间发生了什么。</div>
+        <p class="desc">短视频 Feed 流后端，覆盖<b>发布 → 分发 → 消费 → 互动 → 通知</b>全链路。代码按<b>垂直切片</b>组织，每个环节一个独立模块；运行时拆成单体 API + 独立 Worker，通知这类耗时活走异步队列，不堵请求路径。</p>
+        <div class="tags"><span>Go</span><span>Gin</span><span>MySQL</span><span>Redis</span><span>RabbitMQ</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/gorangefeed" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+      </article>
+
+      <article class="project">
+        <div class="visual">
+          <div class="diagram">
+            <div class="flow">
+              <div class="flow-node"><div class="fn-name">入队</div><div class="fn-sub">与业务行同一事务</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">租约领取</div><div class="fn-sub">fencing token 防重复执行</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">执行</div><div class="fn-sub">本地 Handler</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name">完成</div><div class="fn-sub">成功确认</div></div>
+            </div>
+          </div>
+          <div class="diagram-note">失败则指数退避重试，超过上限进死信队列；Worker 中途宕机，租约过期后任务会被其他 Worker 重新接手。</div>
+        </div>
+        <h3><a href="https://github.com/Tidehyc/gorangetask" target="_blank" rel="noopener">gorangetask</a></h3>
+        <div class="hook">任务写进 MySQL 就不怕丢，Worker 挂了也能接着跑。</div>
+        <p class="desc">可嵌入 Go 服务的 <b>MySQL 事务型持久化任务队列</b>：业务数据和任务行写在同一个事务里，提交了就不会丢。领取走租约 + <b>fencing token</b>，旧 Worker 的迟到写回会被拒绝；失败退避重试，耗尽进死信。<b>v0.1.0 已发布</b>，带 CI 与真库集成测试；实测（开发机，2026-10）10,000 笔同事务入队完整率 100%，Worker 停止续租后约 2–3.7 秒任务被接手。</p>
+        <div class="tags"><span>Go</span><span>MySQL</span><span>任务队列</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/gorangetask" target="_blank" rel="noopener">GitHub 仓库 ↗</a>
+      </article>
+    </section>
+
+    <!-- 案例 -->
+    <section id="cases">
+      <div class="sec-label">案例 · 我修过的 Bug <span class="en">Case Studies</span></div>
+
+      <article class="case">
+        <div class="case-proj">REDIS / GO-REDIS</div>
+        <h3>连接池在重新认证完成的瞬间，误报「池已耗尽」</h3>
+        <div class="case-body">
+          <p><span class="k">问题</span>连接池上限 MaxActiveConns 设为 1 时，一条连接刚完成重新认证、明明已经空闲，紧接着发出的命令却会报 connection pool exhausted。用复现脚本在未修复的代码上跑，-race 下 1,000 次里约 51 次中招。</p>
+          <p><span class="k">定位</span>getConn 先用 popIdle 扫一遍空闲连接，此时正在重新认证的连接处于 InUse 状态、被跳过；等流程走到后面的容量检查时，连接其实已经回到 Idle，但容量检查只认还标着 Unusable / InUse 的连接，于是误判池已满，转去拨号又撞上硬上限。</p>
+          <p><span class="k">修法</span>在容量上限处、走拨号和报错之前，对空闲列表做一次性重查：若已有连接变得可获取，就重试领取。只查一次、不新增任何等待，PoolTimeout 预算与 TryGet 的非阻塞语义保持不变。回归测试也随之加强成 200 次快速轮换凭据加并发 PING，未修复时稳定失败。</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged">已合并 · 2026-11-18</span>
+          <a href="https://github.com/redis/go-redis/pull/4333" target="_blank" rel="noopener">PR #4333（关闭 #4332）↗</a>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-proj">GO-TASK / TASK</div>
+        <h3>离线模式下，标了 optional 的远程 include 没缓存就直接报错退出</h3>
+        <div class="case-body">
+          <p><span class="k">问题</span>Taskfile 里把远程 include 标成 optional: true，本意是「本地没有就跳过」；但在 --offline 且缓存不存在时，程序并不跳过，而是报缓存未找到的错误、以退出码 106 结束。</p>
+          <p><span class="k">定位</span>include.Optional 只在构造节点的 NewNode 里被检查，而远程文件的离线缓存查找发生在更晚的 Node.Read() 阶段——检查点和真正出错的位置错开了，optional 的语义在离线路径上根本没生效。</p>
+          <p><span class="k">修法</span>在 reader.go 的 include() 里把检查前移：往图里加节点之前，先试读一次本地缓存；optional + 离线 + 远程节点且缓存不存在时直接跳过。同时保证嵌套的非 optional 远程 include 的缓存错误不会被外层 optional 父级吞掉，并补了覆盖直接与嵌套 optional 组合的单元测试。</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged">已合并 · 2026-11-06</span>
+          <a href="https://github.com/go-task/task/pull/3081" target="_blank" rel="noopener">PR #3081（关闭 #3076）↗</a>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-proj">UBER / KRAKEN</div>
+        <h3>四个被跳过了六年的 TLS 测试</h3>
+        <div class="case-body">
+          <p><span class="k">问题</span>utils/httputil 里的四个 TLS 客户端测试自 2019 年起一直被 skip 掉，年年躺在代码库里，没人知道它们到底还能不能过。</p>
+          <p><span class="k">定位</span>把 skip 摘掉后，暴露出两个互不相干的失败：一是测试生成的证书只填了 CommonName、没有 SAN，Go 1.15 起 x509 校验直接拒绝这种证书；二是 2022 年的一次改动把 HTTP 回退改成了需要显式开启（EnableHTTPFallback），而被跳过的测试从没跟上这个变化。</p>
+          <p><span class="k">修法</span>给测试证书模板补上 DNSNames；回退测试显式开启 EnableHTTPFallback()；顺手把测试服务器的监听地址改绑 127.0.0.1:0，不再占用通配地址。纯测试改动，本地用 -count=20 -race 反复跑过验证。</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged">已合并 · 2026-10-27</span>
+          <a href="https://github.com/uber/kraken/pull/729" target="_blank" rel="noopener">PR #729（关闭 #230）↗</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- 动态 -->
+    <section id="activity">
+      <div class="sec-label">动态 <span class="en">News &amp; Activity</span></div>
+
+      <div class="activity-wrap" id="activity-wrap" hidden>
+        <div class="grid-scroll"><div class="contrib-grid" id="contrib-grid"></div></div>
+        <div class="legend">少 <i></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i> 多</div>
+        <div class="activity-stats">
+          <div class="stat"><b id="stat-total">–</b><span>近半年总贡献</span></div>
+          <div class="stat"><b id="stat-streak">–</b><span>最长连续天数</span></div>
+          <div class="stat"><b id="stat-max">–</b><span>单日最高贡献</span></div>
+        </div>
+      </div>
+
+      <ul class="news">
+        <li><span class="date">2026-11-18</span><span class="txt"><b>PR 合并入 redis/go-redis</b>：修掉连接池在重新认证完成瞬间误报耗尽的问题。</span></li>
+        <li><span class="date">2026-11-16</span><span class="txt"><b>向 pingcap/tidb 提交 PR</b>：memtable 字段类型克隆修复。</span></li>
+        <li><span class="date">2026-11-10</span><span class="txt"><b>发布 orangecode</b>：自己的开源 Agent Harness 项目。</span></li>
+        <li><span class="date">2026-11-06</span><span class="txt"><b>PR 合并入 go-task/task</b>：离线模式下跳过未缓存的可选远程 include。</span></li>
+        <li><span class="date">2026-10-27</span><span class="txt"><b>PR 合并入 uber/kraken</b>：重新启用四个被跳过的 TLS 客户端测试。</span></li>
+      </ul>
+
+      <div class="events" id="events" hidden>
+        <div class="ev-title">GITHUB 最近动态</div>
+        <ul id="events-list"></ul>
+      </div>
+    </section>
+
+    <!-- 观点 -->
+    <section id="views" class="views">
+      <div class="sec-label">观点 · 我做事的方式 <span class="en">Principles</span></div>
+      <div class="view">
+        <div class="big"><span class="no">01</span>先复现，再修复。</div>
+        <p>提 PR 之前，先在本地把问题原样跑出来。复现不了的问题，不急着下结论。</p>
+      </div>
+      <div class="view">
+        <div class="big"><span class="no">02</span>不夸大、不虚构。</div>
+        <p>简历和 PR 描述只写能验证的东西：数字要有出处，结论要能复查。</p>
+      </div>
+      <div class="view">
+        <div class="big"><span class="no">03</span>改一处，测一处。</div>
+        <p>每个修复都配回归测试，让同一个问题没有第二次出现的机会。</p>
+      </div>
+    </section>
+
+    <!-- 联系 -->
+    <section id="contact" class="contact">
+      <div class="sec-label">联系 <span class="en">Contact</span></div>
+      <p>找我聊聊 Go、开源，或者实习机会：</p>
+      <div class="ways">
+        <span>邮箱 · <a href="mailto:tidehyc3234@163.com">tidehyc3234@163.com</a></span>
+        <span>GitHub · <a href="https://github.com/Tidehyc" target="_blank" rel="noopener">@Tidehyc ↗</a></span>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Tide · 厦门</span>
+      <span>Built with plain HTML / CSS / JS</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- 导航滚动高亮 ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll("#sidenav a"));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute("href").slice(1)] = a; });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          links.forEach(function(a){ a.classList.remove("active"); });
+          var a = map[e.target.id];
+          if (a) a.classList.add("active");
+        }
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    ["projects","cases","activity","views","contact"].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  /* ---------- 相对时间 ---------- */
+  function relTime(iso){
+    var then = new Date(iso).getTime();
+    var diff = Date.now() - then;
+    var min = Math.floor(diff / 60000);
+    if (min < 1) return "刚刚";
+    if (min < 60) return min + " 分钟前";
+    var h = Math.floor(min / 60);
+    if (h < 24) return h + " 小时前";
+    var d = Math.floor(h / 24);
+    if (d < 30) return d + " 天前";
+    var m = Math.floor(d / 30);
+    if (m < 12) return m + " 个月前";
+    return Math.floor(m / 12) + " 年前";
+  }
+
+  /* ---------- 贡献活动图（橙色自渲染） ---------- */
+  fetch("https://github-contributions-api.jogruber.de/v4/Tidehyc")
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data){
+      var all = (data && data.contributions) || [];
+      if (!all.length) return;
+      all.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+
+      /* 最近约 26 周 */
+      var days = 182;
+      var win = all.slice(-days);
+      if (!win.length) return;
+
+      var total = 0, maxDay = 0, streak = 0, run = 0;
+      win.forEach(function(d){
+        total += d.count;
+        if (d.count > maxDay) maxDay = d.count;
+        if (d.count > 0) { run++; if (run > streak) streak = run; }
+        else run = 0;
+      });
+
+      /* 网格：按周列对齐，第一列从周日开始 */
+      var byDate = {};
+      win.forEach(function(d){ byDate[d.date] = d; });
+      function fmt(dt){
+        var m = String(dt.getMonth() + 1).padStart(2, "0");
+        var dd = String(dt.getDate()).padStart(2, "0");
+        return dt.getFullYear() + "-" + m + "-" + dd;
+      }
+      var last = new Date(win[win.length - 1].date + "T00:00:00");
+      var end = new Date(last); end.setDate(end.getDate() + (6 - end.getDay())); /* 本周六 */
+      var start = new Date(end); start.setDate(start.getDate() - (26 * 7 - 1));
+
+      var grid = document.getElementById("contrib-grid");
+      var cur = new Date(start);
+      var todayStr = fmt(new Date());
+      while (cur <= end) {
+        var key = fmt(cur);
+        var cell = document.createElement("i");
+        var d = byDate[key];
+        if (d && key <= todayStr) {
+          var lv = Math.max(0, Math.min(4, d.level || 0));
+          if (lv > 0) cell.className = "l" + lv;
+          cell.title = key + " · " + d.count + " 次贡献";
+        }
+        grid.appendChild(cell);
+        cur.setDate(cur.getDate() + 1);
+      }
+
+      document.getElementById("stat-total").textContent = total;
+      document.getElementById("stat-streak").textContent = streak + " 天";
+      document.getElementById("stat-max").textContent = maxDay;
+      document.getElementById("activity-wrap").hidden = false;
+    })
+    .catch(function(){ /* 失败则整块隐藏，只保留 News 文字流 */ });
+
+  /* ---------- GitHub 最近动态 ---------- */
+  fetch("https://api.github.com/users/Tidehyc/events/public?per_page=30")
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(events){
+      var items = [];
+      for (var i = 0; i < events.length && items.length < 5; i++) {
+        var ev = events[i], repo = ev.repo && ev.repo.name, txt = null;
+        if (ev.type === "PushEvent") {
+          var n = (ev.payload.commits || []).length;
+          txt = "向 <b>" + repo + "</b> 推送了 " + (n || 1) + " 个提交";
+        } else if (ev.type === "PullRequestEvent") {
+          var act = ev.payload.action;
+          var merged = ev.payload.pull_request && ev.payload.pull_request.merged;
+          txt = (merged ? "合并" : act === "opened" ? "打开" : act) +
+                "了 <b>" + repo + "</b> 的 PR #" + ev.payload.number;
+        } else if (ev.type === "IssuesEvent") {
+          txt = "在 <b>" + repo + "</b> " + (ev.payload.action === "opened" ? "打开了" : "更新了") +
+                " issue #" + ev.payload.issue.number;
+        } else if (ev.type === "CreateEvent" && ev.payload.ref_type === "repository") {
+          txt = "创建了仓库 <b>" + repo + "</b>";
+        }
+        if (txt) items.push("<li>" + relTime(ev.created_at) + " · " + txt + "</li>");
+      }
+      if (!items.length) return;
+      document.getElementById("events-list").innerHTML = items.join("");
+      document.getElementById("events").hidden = false;
+    })
+    .catch(function(){ /* 静默隐藏 */ });
+})();
+</script>
+</body>
+</html>
