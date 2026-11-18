@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/space-grotesk@latest/index.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/inter@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/source-serif-4@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/noto-serif-sc@latest/index.css">
 <style>
   :root{
     color-scheme:light;
@@ -32,6 +34,7 @@
     --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
     --font-display:"Space Grotesk","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
     --font-mono:ui-monospace,"SF Mono","Cascadia Code",Consolas,Menlo,monospace;
+    --font-serif:"Source Serif 4","Noto Serif SC","Songti SC","STSong","SimSun",Georgia,"Times New Roman",serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -172,8 +175,9 @@
 
   /* 开场白 */
   .intro p{
-    font-size:18.5px;
-    line-height:1.95;
+    font-family:var(--font-serif);
+    font-size:1.12rem;
+    line-height:1.9;
     color:var(--text);
     max-width:44em;
   }
