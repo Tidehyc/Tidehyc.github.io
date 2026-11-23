@@ -489,7 +489,7 @@
         <ul>
           <li data-i18n="now1"><b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.</li>
           <li data-i18n="now2"><b>Learning cloud-native and platform engineering</b> — my direction is Go backend + cloud-native.</li>
-          <li data-i18n="now3"><b>Iterating on orangecode</b>, my open-source Agent Harness project.</li>
+          <li data-i18n="now3"><b>Rewriting orangecode in Rust</b>, my open-source Agent Harness project.</li>
         </ul>
       </div>
     </section>
@@ -497,18 +497,6 @@
     <!-- 项目 -->
     <section id="projects">
       <div class="sec-label"><span data-i18n="secProjects">Projects</span></div>
-
-      <article class="project">
-        <div class="visual browser-frame">
-          <div class="frame-bar"><i></i><i></i><i></i><span class="frame-url" data-i18n="frameUrl">orangecode — tui · live capture</span></div>
-          <img id="tuiImg" src="assets/orangecode-tui.png" alt="orangecode terminal UI, live capture: the main screen, with the ORANGE CODE banner, session history panel, and status bar">
-        </div>
-        <h3><a href="https://github.com/Tidehyc/orangecode" target="_blank" rel="noopener">orangecode</a></h3>
-        <div class="hook" data-i18n="ocHook">An Agent Harness that runs multiple tasks at once — and remembers the context.</div>
-        <p class="desc" data-i18n="ocDesc">An open-source agent harness for <b>concurrent tasks and multi-turn conversations</b>. It organizes task execution with <b>Spine semantics</b>, routes context via <b>KNN semantic routing</b>, and tracks per-call costs with <b>CostLedger</b>. Session exports carry <b>SHA-256 signatures</b> — verifiable and tamper-proof.</p>
-        <div class="tags"><span>Python</span><span>TypeScript</span><span>Agent Harness</span></div>
-        <a class="repo-link" href="https://github.com/Tidehyc/orangecode" target="_blank" rel="noopener" data-i18n="repoLink">GitHub repo ↗</a>
-      </article>
 
       <article class="project">
         <div class="visual">
@@ -620,7 +608,6 @@
       <ul class="news">
         <li><span class="date">2026-11-18</span><span class="txt" data-i18n="news1"><b>PR merged into redis/go-redis</b>: fixed false “pool exhausted” errors right after connection re-authentication.</span></li>
         <li><span class="date">2026-11-16</span><span class="txt" data-i18n="news2"><b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.</span></li>
-        <li><span class="date">2026-11-10</span><span class="txt" data-i18n="news3"><b>Released orangecode</b>, my open-source Agent Harness.</span></li>
         <li><span class="date">2026-11-06</span><span class="txt" data-i18n="news4"><b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.</span></li>
         <li><span class="date">2026-10-27</span><span class="txt" data-i18n="news5"><b>PR merged into uber/kraken</b>: re-enabled four TLS client tests that had been skipped since 2019.</span></li>
       </ul>
@@ -688,16 +675,12 @@
       nowUpdated: "Last updated: Nov 2026",
       now1: "<b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.",
       now2: "<b>Learning cloud-native and platform engineering</b> — my direction is Go backend + cloud-native.",
-      now3: "<b>Iterating on orangecode</b>, my open-source Agent Harness project.",
+      now3: "<b>Rewriting orangecode in Rust</b>, my open-source Agent Harness project.",
       secProjects: "Projects",
       secCases: "Case Studies — Bugs I've Fixed",
       secActivity: "News & Activity",
       secViews: "Principles — How I Work",
       secContact: "Contact",
-      frameUrl: "orangecode — tui · live capture",
-      tuiAlt: "orangecode terminal UI, live capture: the main screen, with the ORANGE CODE banner, session history panel, and status bar",
-      ocHook: "An Agent Harness that runs multiple tasks at once — and remembers the context.",
-      ocDesc: "An open-source agent harness for <b>concurrent tasks and multi-turn conversations</b>. It organizes task execution with <b>Spine semantics</b>, routes context via <b>KNN semantic routing</b>, and tracks per-call costs with <b>CostLedger</b>. Session exports carry <b>SHA-256 signatures</b> — verifiable and tamper-proof.",
       feedHook: "What happens between a short video being posted and it showing up in your feed.",
       feedDesc: "A short-video feed backend spanning publishing → distribution → consumption → interaction → notification. Structured around <b>vertical slices</b>, each stage its own module; split at runtime into a monolithic API and standalone workers, with time-consuming work like notifications routed through asynchronous queues so the request path stays unblocked.",
       taskHook: "Tasks written to MySQL don't get lost — if a worker dies, another one picks them up.",
@@ -739,7 +722,6 @@
       statMaxLabel: "Peak day",
       news1: "<b>PR merged into redis/go-redis</b>: fixed false “pool exhausted” errors right after connection re-authentication.",
       news2: "<b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.",
-      news3: "<b>Released orangecode</b>, my open-source Agent Harness.",
       news4: "<b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.",
       news5: "<b>PR merged into uber/kraken</b>: re-enabled four TLS client tests that had been skipped since 2019.",
       eventsTitle: "Recent GitHub Activity",
@@ -769,16 +751,12 @@
       nowUpdated: "最后更新 2026-11",
       now1: "<b>持续给 uber/kraken 和其他 Go 开源项目贡献代码</b>，有新问题先在本地复现再说。",
       now2: "<b>在学云原生与平台工程</b>，方向是 Go 后端 + 云原生。",
-      now3: "持续迭代<b>自己的 Agent Harness 项目 orangecode</b>。",
+      now3: "正在用 <b>Rust 重写自己的 Agent Harness 项目 orangecode</b>。",
       secProjects: "项目",
       secCases: "案例 · 我修过的 Bug",
       secActivity: "动态",
       secViews: "观点 · 我做事的方式",
       secContact: "联系",
-      frameUrl: "orangecode — tui 实拍",
-      tuiAlt: "orangecode 终端界面实拍：主界面，含 ORANGE CODE 字标、历史会话面板与状态栏",
-      ocHook: "一个能同时跑多个任务、还能记住上下文的 Agent Harness。",
-      ocDesc: "面向<b>多任务并发与多轮对话</b>的开源 Agent Harness。调度层用 <b>Spine</b> 语义组织任务执行脉络；上下文路由走 <b>KNN 语义路由</b>，并通过 <b>CostLedger 成本账本</b>记录每次调用花销；会话导出带 <b>SHA-256 签名</b>，可校验、防篡改。",
       feedHook: "一条短视频从投稿到被刷到，中间发生了什么。",
       feedDesc: "短视频 Feed 流后端，覆盖<b>发布 → 分发 → 消费 → 互动 → 通知</b>全链路。代码按<b>垂直切片</b>组织，每个环节一个独立模块；运行时拆成单体 API + 独立 Worker，通知这类耗时活走异步队列，不堵请求路径。",
       taskHook: "任务写进 MySQL 就不怕丢，Worker 挂了也能接着跑。",
@@ -820,7 +798,6 @@
       statMaxLabel: "单日最高贡献",
       news1: "<b>PR 合并入 redis/go-redis</b>：修掉连接池在重新认证完成瞬间误报耗尽的问题。",
       news2: "<b>向 pingcap/tidb 提交 PR</b>：memtable 字段类型克隆修复。",
-      news3: "<b>发布 orangecode</b>：自己的开源 Agent Harness 项目。",
       news4: "<b>PR 合并入 go-task/task</b>：离线模式下跳过未缓存的可选远程 include。",
       news5: "<b>PR 合并入 uber/kraken</b>：重新启用四个被跳过的 TLS 客户端测试。",
       eventsTitle: "GITHUB 最近动态",
