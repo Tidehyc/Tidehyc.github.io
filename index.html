@@ -489,7 +489,7 @@
         <ul>
           <li data-i18n="now1"><b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.</li>
           <li data-i18n="now2"><b>Learning cloud-native and platform engineering</b> — my direction is Go backend + cloud-native.</li>
-          <li data-i18n="now3"><b>Rewriting orangecode in Rust</b>, my open-source Agent Harness project.</li>
+          <li data-i18n="now3"><b>Building OrangeAgent</b>, a pure-Rust, single-binary coding agent &amp; harness.</li>
         </ul>
       </div>
     </section>
@@ -497,6 +497,27 @@
     <!-- 项目 -->
     <section id="projects">
       <div class="sec-label"><span data-i18n="secProjects">Projects</span></div>
+
+      <article class="project">
+        <div class="visual">
+          <div class="diagram">
+            <div class="flow">
+              <div class="flow-node"><div class="fn-name" data-i18n="oa1Name">Prompt</div><div class="fn-sub" data-i18n="oa1Sub">you ask, in plain words</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="oa2Name">Agent Loop</div><div class="fn-sub" data-i18n="oa2Sub">ReAct, steerable mid-turn</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="oa3Name">Tools</div><div class="fn-sub" data-i18n="oa3Sub">read · write · edit · bash</div></div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-node"><div class="fn-name" data-i18n="oa4Name">Sandbox</div><div class="fn-sub" data-i18n="oa4Sub">Landlock · Seatbelt</div></div>
+            </div>
+          </div>
+        </div>
+        <h3><a href="https://github.com/Tidehyc/orangeagent" target="_blank" rel="noopener">orangeagent</a></h3>
+        <div class="hook" data-i18n="oaHook">A coding agent that ships as one Rust binary — no runtime to install.</div>
+        <p class="desc" data-i18n="oaDesc">A from-scratch Rust rewrite of my earlier agent harness, organized as a modular Cargo workspace: a multi-provider streaming layer (OpenAI-compatible, Anthropic, Gemini), an event-driven ReAct core, native OS sandboxing (Landlock/Seccomp on Linux, Seatbelt on macOS), and append-only JSONL sessions that can be resumed after a crash. Work in progress — the provider layer landed first, with a streaming chat adapter and VCR record/replay for deterministic tests.</p>
+        <div class="tags"><span>Rust</span></div>
+        <a class="repo-link" href="https://github.com/Tidehyc/orangeagent" target="_blank" rel="noopener" data-i18n="repoLink">GitHub repo ↗</a>
+      </article>
 
       <article class="project">
         <div class="visual">
@@ -620,6 +641,7 @@
       </div>
 
       <ul class="news">
+        <li><span class="date">2026-11-24</span><span class="txt" data-i18n="news7"><b>Started OrangeAgent</b>: a from-scratch Rust rewrite of my agent harness — first up, the multi-provider streaming layer.</span></li>
         <li><span class="date">2026-11-24</span><span class="txt" data-i18n="news6"><b>PR merged into dolthub/dolt</b>: its SQL engine's ST_GeomFromGeoJSON now returns NULL on a NULL SRID instead of panicking.</span></li>
         <li><span class="date">2026-11-18</span><span class="txt" data-i18n="news1"><b>PR merged into redis/go-redis</b>: fixed false “pool exhausted” errors right after connection re-authentication.</span></li>
         <li><span class="date">2026-11-16</span><span class="txt" data-i18n="news2"><b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.</span></li>
@@ -690,12 +712,22 @@
       nowUpdated: "Last updated: Nov 2026",
       now1: "<b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.",
       now2: "<b>Learning cloud-native and platform engineering</b> — my direction is Go backend + cloud-native.",
-      now3: "<b>Rewriting orangecode in Rust</b>, my open-source Agent Harness project.",
+      now3: "<b>Building OrangeAgent</b>, a pure-Rust, single-binary coding agent & harness.",
       secProjects: "Projects",
       secCases: "Case Studies — Bugs I've Fixed",
       secActivity: "News & Activity",
       secViews: "Principles — How I Work",
       secContact: "Contact",
+      oa1Name: "Prompt",
+      oa1Sub: "you ask, in plain words",
+      oa2Name: "Agent Loop",
+      oa2Sub: "ReAct, steerable mid-turn",
+      oa3Name: "Tools",
+      oa3Sub: "read · write · edit · bash",
+      oa4Name: "Sandbox",
+      oa4Sub: "Landlock · Seatbelt",
+      oaHook: "A coding agent that ships as one Rust binary — no runtime to install.",
+      oaDesc: "A from-scratch Rust rewrite of my earlier agent harness, organized as a modular Cargo workspace: a multi-provider streaming layer (OpenAI-compatible, Anthropic, Gemini), an event-driven ReAct core, native OS sandboxing (Landlock/Seccomp on Linux, Seatbelt on macOS), and append-only JSONL sessions that can be resumed after a crash. Work in progress — the provider layer landed first, with a streaming chat adapter and VCR record/replay for deterministic tests.",
       feedHook: "What happens between a short video being posted and it showing up in your feed.",
       feedDesc: "A short-video feed backend spanning publishing → distribution → consumption → interaction → notification. Structured around <b>vertical slices</b>, each stage its own module; split at runtime into a monolithic API and standalone workers, with time-consuming work like notifications routed through asynchronous queues so the request path stays unblocked.",
       taskHook: "Tasks written to MySQL don't get lost — if a worker dies, another one picks them up.",
@@ -746,6 +778,7 @@
       news4: "<b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.",
       news5: "<b>PR merged into uber/kraken</b>: re-enabled four TLS client tests that had been skipped since 2019.",
       news6: "<b>PR merged into dolthub/dolt</b>: its SQL engine's ST_GeomFromGeoJSON now returns NULL on a NULL SRID instead of panicking.",
+      news7: "<b>Started OrangeAgent</b>: a from-scratch Rust rewrite of my agent harness — first up, the multi-provider streaming layer.",
       eventsTitle: "Recent GitHub Activity",
       view1Title: "Reproduce first, then fix.",
       view1Body: "Before opening a PR, reproduce the issue locally, exactly as it happens. If it can't be reproduced, don't rush to a conclusion.",
@@ -773,12 +806,22 @@
       nowUpdated: "最后更新 2026-11",
       now1: "<b>持续给 uber/kraken 和其他 Go 开源项目贡献代码</b>，有新问题先在本地复现再说。",
       now2: "<b>在学云原生与平台工程</b>，方向是 Go 后端 + 云原生。",
-      now3: "正在用 <b>Rust 重写自己的 Agent Harness 项目 orangecode</b>。",
+      now3: "正在开发 <b>OrangeAgent</b>：纯 Rust、单二进制的编程 Agent 与 Harness。",
       secProjects: "项目",
       secCases: "案例 · 我修过的 Bug",
       secActivity: "动态",
       secViews: "观点 · 我做事的方式",
       secContact: "联系",
+      oa1Name: "提问",
+      oa1Sub: "用自然语言说需求",
+      oa2Name: "模型循环",
+      oa2Sub: "ReAct，中途可干预",
+      oa3Name: "工具执行",
+      oa3Sub: "read · write · edit · bash",
+      oa4Name: "沙箱",
+      oa4Sub: "Landlock · Seatbelt",
+      oaHook: "一个只用单个 Rust 二进制跑起来的编程 Agent——不用装任何运行时。",
+      oaDesc: "把之前的 Agent Harness 用 Rust 从零重写，模块化 Cargo 工作区：多供应商流式层（OpenAI 兼容、Anthropic、Gemini）、事件驱动的 ReAct 核心、原生 OS 沙箱（Linux Landlock/Seccomp、macOS Seatbelt）、可崩溃恢复的只追加 JSONL 会话。开发中——先落地的是供应商层：流式聊天适配器 + 用于确定性测试的 VCR 录制回放。",
       feedHook: "一条短视频从投稿到被刷到，中间发生了什么。",
       feedDesc: "短视频 Feed 流后端，覆盖<b>发布 → 分发 → 消费 → 互动 → 通知</b>全链路。代码按<b>垂直切片</b>组织，每个环节一个独立模块；运行时拆成单体 API + 独立 Worker，通知这类耗时活走异步队列，不堵请求路径。",
       taskHook: "任务写进 MySQL 就不怕丢，Worker 挂了也能接着跑。",
@@ -829,6 +872,7 @@
       news4: "<b>PR 合并入 go-task/task</b>：离线模式下跳过未缓存的可选远程 include。",
       news5: "<b>PR 合并入 uber/kraken</b>：重新启用四个被跳过的 TLS 客户端测试。",
       news6: "<b>PR 合并入 dolthub/dolt</b>：其 SQL 引擎的 ST_GeomFromGeoJSON 遇 NULL SRID 不再 panic，改为返回 NULL。",
+      news7: "<b>开工 OrangeAgent</b>：用 Rust 从零重写我的 Agent Harness——先落地多供应商流式层。",
       eventsTitle: "GITHUB 最近动态",
       view1Title: "先复现，再修复。",
       view1Body: "提 PR 之前，先在本地把问题原样跑出来。复现不了的问题，不急着下结论。",
