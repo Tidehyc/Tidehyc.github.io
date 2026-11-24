@@ -476,7 +476,7 @@
 
     <!-- 开场白 -->
     <section class="intro" id="intro">
-      <p data-i18n="intro1">I'm Tide, and I've had PRs merged into redis/go-redis (22k★), go-task/task (16k★), and uber/kraken (6.7k★). I'm a Communication Engineering undergrad at Xiamen University (Class of 2028). I started with C++, then moved to Go for backend and open-source work; I build my own projects to learn. Lately, I've been building up cloud-native and platform engineering, and looking for a Go backend internship.</p>
+      <p data-i18n="intro1">I'm Tide, and I've had PRs merged into dolthub/dolt (25k★), redis/go-redis (22k★), and go-task/task (16k★). I'm a Communication Engineering undergrad at Xiamen University (Class of 2028). I started with C++, then moved to Go for backend and open-source work; I build my own projects to learn. Lately, I've been building up cloud-native and platform engineering, and looking for a Go backend internship.</p>
     </section>
 
     <!-- Now -->
@@ -589,6 +589,20 @@
           <a href="https://github.com/uber/kraken/pull/729" target="_blank" rel="noopener" data-i18n="prLink3">PR #729 (closes #230) ↗</a>
         </div>
       </article>
+
+      <article class="case">
+        <div class="case-proj">DOLTHUB / DOLT</div>
+        <h3 data-i18n="c4t">ST_GeomFromGeoJSON panics on a NULL SRID instead of returning NULL</h3>
+        <div class="case-body">
+          <p data-i18n="c4p"><span class="k">Problem</span>In Dolt's SQL engine (go-mysql-server), calling ST_GeomFromGeoJSON with a NULL SRID doesn't return NULL the way MySQL does — the server panics and takes the query down with it.</p>
+          <p data-i18n="c4q"><span class="k">Root Cause</span>The SRID argument flows into the GeoJSON conversion path in geojson.go with no NULL check: when it is NULL, the code still treats it as a concrete value and panics, instead of short-circuiting to a SQL NULL result.</p>
+          <p data-i18n="c4r"><span class="k">Fix</span>Return NULL early when the SRID is NULL, matching MySQL semantics, with a failing-first regression test that panics on the old code and passes with the fix. The maintainer merged it as-is; a parallel fix a Dolt maintainer had opened for the same issue was closed in its favor.</p>
+        </div>
+        <div class="case-foot">
+          <span class="merged" data-i18n="merged4">Merged · Nov 24, 2026</span>
+          <a href="https://github.com/dolthub/go-mysql-server/pull/4207" target="_blank" rel="noopener" data-i18n="prLink4">PR #4207 (closes dolt#12600) ↗</a>
+        </div>
+      </article>
     </section>
 
     <!-- 动态 -->
@@ -606,6 +620,7 @@
       </div>
 
       <ul class="news">
+        <li><span class="date">2026-11-24</span><span class="txt" data-i18n="news6"><b>PR merged into dolthub/dolt</b>: its SQL engine's ST_GeomFromGeoJSON now returns NULL on a NULL SRID instead of panicking.</span></li>
         <li><span class="date">2026-11-18</span><span class="txt" data-i18n="news1"><b>PR merged into redis/go-redis</b>: fixed false “pool exhausted” errors right after connection re-authentication.</span></li>
         <li><span class="date">2026-11-16</span><span class="txt" data-i18n="news2"><b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.</span></li>
         <li><span class="date">2026-11-06</span><span class="txt" data-i18n="news4"><b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.</span></li>
@@ -670,7 +685,7 @@
       navActivity: "Activity",
       navViews: "Principles",
       navContact: "Contact",
-      intro1: "I'm Tide, and I've had PRs merged into redis/go-redis (22k★), go-task/task (16k★), and uber/kraken (6.7k★). I'm a Communication Engineering undergrad at Xiamen University (Class of 2028). I started with C++, then moved to Go for backend and open-source work; I build my own projects to learn. Lately, I've been building up cloud-native and platform engineering, and looking for a Go backend internship.",
+      intro1: "I'm Tide, and I've had PRs merged into dolthub/dolt (25k★), redis/go-redis (22k★), and go-task/task (16k★). I'm a Communication Engineering undergrad at Xiamen University (Class of 2028). I started with C++, then moved to Go for backend and open-source work; I build my own projects to learn. Lately, I've been building up cloud-native and platform engineering, and looking for a Go backend internship.",
       nowTitle: "Now",
       nowUpdated: "Last updated: Nov 2026",
       now1: "<b>Contributing to uber/kraken and other Go open-source projects</b> — when something looks broken, I reproduce it locally first.",
@@ -715,6 +730,12 @@
       c3r: "<span class=\"k\">Fix</span>Added DNSNames to the test certificate template, turned on EnableHTTPFallback() explicitly in the fallback test, and rebound the test server to 127.0.0.1:0 instead of a wildcard address. Test-only changes, verified locally with repeated -count=20 -race runs.",
       merged3: "Merged · Oct 27, 2026",
       prLink3: "PR #729 (closes #230) ↗",
+      c4t: "ST_GeomFromGeoJSON panics on a NULL SRID instead of returning NULL",
+      c4p: "<span class=\"k\">Problem</span>In Dolt's SQL engine (go-mysql-server), calling ST_GeomFromGeoJSON with a NULL SRID doesn't return NULL the way MySQL does — the server panics and takes the query down with it.",
+      c4q: "<span class=\"k\">Root Cause</span>The SRID argument flows into the GeoJSON conversion path in geojson.go with no NULL check: when it is NULL, the code still treats it as a concrete value and panics, instead of short-circuiting to a SQL NULL result.",
+      c4r: "<span class=\"k\">Fix</span>Return NULL early when the SRID is NULL, matching MySQL semantics, with a failing-first regression test that panics on the old code and passes with the fix. The maintainer merged it as-is; a parallel fix a Dolt maintainer had opened for the same issue was closed in its favor.",
+      merged4: "Merged · Nov 24, 2026",
+      prLink4: "PR #4207 (closes dolt#12600) ↗",
       legendLess: "Less",
       legendMore: "More",
       statTotalLabel: "Contributions (last 6 months)",
@@ -724,6 +745,7 @@
       news2: "<b>PR opened to pingcap/tidb</b>: a fix for field-type cloning in memtables.",
       news4: "<b>PR merged into go-task/task</b>: offline mode now skips uncached optional remote includes.",
       news5: "<b>PR merged into uber/kraken</b>: re-enabled four TLS client tests that had been skipped since 2019.",
+      news6: "<b>PR merged into dolthub/dolt</b>: its SQL engine's ST_GeomFromGeoJSON now returns NULL on a NULL SRID instead of panicking.",
       eventsTitle: "Recent GitHub Activity",
       view1Title: "Reproduce first, then fix.",
       view1Body: "Before opening a PR, reproduce the issue locally, exactly as it happens. If it can't be reproduced, don't rush to a conclusion.",
@@ -746,7 +768,7 @@
       navActivity: "动态",
       navViews: "观点",
       navContact: "联系",
-      intro1: "我是 Tide，给 redis/go-redis（22k★）、go-task/task（16k★）和 uber/kraken（6.7k★）合并过 PR。目前在厦门大学读通信工程（2028 届），从 C++ 转 Go 搞后端与开源，平时做项目练手。最近在补云原生与平台工程，也在找 Go 后端实习。",
+      intro1: "我是 Tide，给 dolthub/dolt（25k★）、redis/go-redis（22k★）和 go-task/task（16k★）合并过 PR。目前在厦门大学读通信工程（2028 届），从 C++ 转 Go 搞后端与开源，平时做项目练手。最近在补云原生与平台工程，也在找 Go 后端实习。",
       nowTitle: "Now · 现在在做的事",
       nowUpdated: "最后更新 2026-11",
       now1: "<b>持续给 uber/kraken 和其他 Go 开源项目贡献代码</b>，有新问题先在本地复现再说。",
@@ -791,6 +813,12 @@
       c3r: "<span class=\"k\">修法</span>给测试证书模板补上 DNSNames；回退测试显式开启 EnableHTTPFallback()；顺手把测试服务器的监听地址改绑 127.0.0.1:0，不再占用通配地址。纯测试改动，本地用 -count=20 -race 反复跑过验证。",
       merged3: "已合并 · 2026-10-27",
       prLink3: "PR #729（关闭 #230）↗",
+      c4t: "ST_GeomFromGeoJSON 遇到 NULL SRID 直接崩溃，而不是返回 NULL",
+      c4p: "<span class=\"k\">问题</span>在 Dolt 的 SQL 引擎（go-mysql-server）里，ST_GeomFromGeoJSON 传入 NULL 的 SRID 时，不像 MySQL 那样返回 NULL，而是让服务器 panic，整条查询跟着挂掉。",
+      c4q: "<span class=\"k\">定位</span>SRID 参数没做空值检查就进了 geojson.go 的转换路径：为 NULL 时代码仍按具体值去用，直接 panic；而 MySQL 的语义应该是短路返回 SQL 的 NULL。",
+      c4r: "<span class=\"k\">修法</span>SRID 为 NULL 时提前返回 NULL，与 MySQL 语义对齐；回归测试先行，在旧代码上稳定 panic、修复后通过。维护者原样合入；Dolt 维护者并行开的同题修复也关掉，改用了这一版。",
+      merged4: "已合并 · 2026-11-24",
+      prLink4: "PR #4207（关闭 dolt#12600）↗",
       legendLess: "少",
       legendMore: "多",
       statTotalLabel: "近半年总贡献",
@@ -800,6 +828,7 @@
       news2: "<b>向 pingcap/tidb 提交 PR</b>：memtable 字段类型克隆修复。",
       news4: "<b>PR 合并入 go-task/task</b>：离线模式下跳过未缓存的可选远程 include。",
       news5: "<b>PR 合并入 uber/kraken</b>：重新启用四个被跳过的 TLS 客户端测试。",
+      news6: "<b>PR 合并入 dolthub/dolt</b>：其 SQL 引擎的 ST_GeomFromGeoJSON 遇 NULL SRID 不再 panic，改为返回 NULL。",
       eventsTitle: "GITHUB 最近动态",
       view1Title: "先复现，再修复。",
       view1Body: "提 PR 之前，先在本地把问题原样跑出来。复现不了的问题，不急着下结论。",
